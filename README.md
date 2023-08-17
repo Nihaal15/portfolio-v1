@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Logo" src="https://raw.githubusercontent.com/nihaal15/portfolio-v1/public/output/icons/Icon-512.png" width="100" />
+  <img alt="Logo" src="https://github.com/Nihaal15/portfolio-v1/blob/master/public/output/icons/Icon-512.png?raw=true" width="100" />
 </div>
 <h1 align="center">
   nihaalshirkar15.web.app - v4
