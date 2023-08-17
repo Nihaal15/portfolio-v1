@@ -9,5 +9,4 @@
 </p>
 <br/>
 
-
 ![demo](https://github.com/Nihaal15/portfolio-v1/blob/master/public/output/assets/assets/preview.png?raw=true "preview")
