@@ -15,16 +15,17 @@ class TabletExperienceCard extends StatefulWidget {
   final String url;
   final double width;
 
-  const TabletExperienceCard(
-      {super.key,
-      required this.company,
-      required this.title,
-      required this.description,
-      required this.tags,
-      required this.from,
-      required this.to,
-      required this.url,
-      required this.width,});
+  const TabletExperienceCard({
+    super.key,
+    required this.company,
+    required this.title,
+    required this.description,
+    required this.tags,
+    required this.from,
+    required this.to,
+    required this.url,
+    required this.width,
+  });
 
   @override
   State<TabletExperienceCard> createState() => _TabletExperienceCardState();

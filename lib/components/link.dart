@@ -10,7 +10,12 @@ class Link extends StatefulWidget {
   final double multiplierSize;
   final int index;
 
-  const Link({super.key, required this.tableHeaderWidth, required this.url, required this.multiplierSize, required this.index});
+  const Link(
+      {super.key,
+      required this.tableHeaderWidth,
+      required this.url,
+      required this.multiplierSize,
+      required this.index});
 
   @override
   State<Link> createState() => _LinkState();
@@ -22,17 +27,18 @@ class _LinkState extends State<Link> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.url != ""){
+    if (widget.url != "") {
       setState(() {
         url = widget.url.split("/")[2];
       });
-    } else{
+    } else {
       setState(() {
         url = "";
       });
     }
     return SizedBox(
-      width: widget.tableHeaderWidth[widget.index] * widget.multiplierSize * 0.9,
+      width:
+          widget.tableHeaderWidth[widget.index] * widget.multiplierSize * 0.9,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         opaque: false,
@@ -52,12 +58,12 @@ class _LinkState extends State<Link> {
               html.window.open(widget.url, "_blank");
             }
           },
-          onLongPressDown: (onLong){
+          onLongPressDown: (onLong) {
             setState(() {
               isHover = true;
             });
           },
-          onLongPressUp: (){
+          onLongPressUp: () {
             setState(() {
               isHover = false;
             });
@@ -68,8 +74,8 @@ class _LinkState extends State<Link> {
     );
   }
 
-  Widget linkWidget(){
-    if (url == "github.com"){
+  Widget linkWidget() {
+    if (url == "github.com") {
       return Text.rich(
         TextSpan(
           children: [
@@ -84,18 +90,18 @@ class _LinkState extends State<Link> {
             ),
             (url != "")
                 ? WidgetSpan(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 7.84),
-                child: SvgPicture.asset(
-                  'assets/images/github.svg',
-                  colorFilter: ColorFilter.mode(
-                    isHover ? neonBlue : white.withOpacity(0.9),
-                    BlendMode.srcIn,
-                  ),
-                  height: 16,
-                ),
-              ),
-            )
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 7.84),
+                      child: SvgPicture.asset(
+                        'assets/images/github.svg',
+                        colorFilter: ColorFilter.mode(
+                          isHover ? neonBlue : white.withOpacity(0.9),
+                          BlendMode.srcIn,
+                        ),
+                        height: 16,
+                      ),
+                    ),
+                  )
                 : WidgetSpan(child: Container()),
           ],
         ),
@@ -105,9 +111,7 @@ class _LinkState extends State<Link> {
         TextSpan(
           children: [
             TextSpan(
-              text: (url == "")
-                  ? url
-                  : url.split("/")[2],
+              text: (url == "") ? url : url.split("/")[2],
               style: TextStyle(
                   color: isHover ? neonBlue : white.withOpacity(0.9),
                   fontSize: 14,
@@ -117,20 +121,19 @@ class _LinkState extends State<Link> {
             ),
             (url != "")
                 ? WidgetSpan(
-              child: AnimatedPadding(
-                padding:
-                EdgeInsets.only(left: isHover ? 12.32 : 7.84),
-                duration: const Duration(milliseconds: 300),
-                child: SvgPicture.asset(
-                  'assets/images/angle-right-solid.svg',
-                  colorFilter: ColorFilter.mode(
-                    isHover ? neonBlue : white,
-                    BlendMode.srcIn,
-                  ),
-                  height: 15,
-                ),
-              ),
-            )
+                    child: AnimatedPadding(
+                      padding: EdgeInsets.only(left: isHover ? 12.32 : 7.84),
+                      duration: const Duration(milliseconds: 300),
+                      child: SvgPicture.asset(
+                        'assets/images/angle-right-solid.svg',
+                        colorFilter: ColorFilter.mode(
+                          isHover ? neonBlue : white,
+                          BlendMode.srcIn,
+                        ),
+                        height: 15,
+                      ),
+                    ),
+                  )
                 : WidgetSpan(child: Container()),
           ],
         ),

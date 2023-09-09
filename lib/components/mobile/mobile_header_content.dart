@@ -7,7 +7,8 @@ class MobileTableHeaderContent extends StatefulWidget {
   const MobileTableHeaderContent({super.key});
 
   @override
-  State<MobileTableHeaderContent> createState() => _MobileTableHeaderContentState();
+  State<MobileTableHeaderContent> createState() =>
+      _MobileTableHeaderContentState();
 }
 
 class _MobileTableHeaderContentState extends State<MobileTableHeaderContent> {
@@ -18,9 +19,7 @@ class _MobileTableHeaderContentState extends State<MobileTableHeaderContent> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return BlurryContainer(
       blur: 50,
       width: size.width,
@@ -28,7 +27,12 @@ class _MobileTableHeaderContentState extends State<MobileTableHeaderContent> {
       color: bgColor.withOpacity(0.5),
       padding: const EdgeInsets.all(0),
       borderRadius: const BorderRadius.all(Radius.circular(0)),
-      child: SizedBox(width: double.infinity, height: 52.5, child: headers(size),),);
+      child: SizedBox(
+        width: double.infinity,
+        height: 52.5,
+        child: headers(size),
+      ),
+    );
   }
 
   Widget headers(size) {
@@ -36,9 +40,7 @@ class _MobileTableHeaderContentState extends State<MobileTableHeaderContent> {
       children: [
         Container(
           width: size.width * 0.15,
-          constraints: const BoxConstraints(
-            minWidth: 40
-          ),
+          constraints: const BoxConstraints(minWidth: 40),
           child: Text(
             "Year",
             style: TextStyle(

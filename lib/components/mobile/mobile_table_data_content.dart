@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:portfolio/components/title_link.dart';
-import 'package:universal_html/html.dart' as html;
 
 import '../../utils/constants.dart';
-import '../link.dart';
 
 class MobileTableData extends StatefulWidget {
   const MobileTableData({super.key});
@@ -19,15 +16,13 @@ class _MobileTableDataState extends State<MobileTableData> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return records(size);
   }
 
   Widget records(size) {
     final Stream<QuerySnapshot> projectStream =
-    FirebaseFirestore.instance.collection('projects').snapshots();
+        FirebaseFirestore.instance.collection('projects').snapshots();
 
     return StreamBuilder(
       stream: projectStream,
@@ -59,9 +54,7 @@ class _MobileTableDataState extends State<MobileTableData> {
                     children: [
                       Container(
                         width: size.width * 0.15,
-                        constraints: const BoxConstraints(
-                          minWidth: 40
-                        ),
+                        constraints: const BoxConstraints(minWidth: 40),
                         child: Text(
                           year,
                           style: TextStyle(
@@ -75,7 +68,10 @@ class _MobileTableDataState extends State<MobileTableData> {
                         width: 15,
                       ),
                       Expanded(
-                        child: TitleLink(url: url, title: title,),
+                        child: TitleLink(
+                          url: url,
+                          title: title,
+                        ),
                       ),
                     ],
                   ),

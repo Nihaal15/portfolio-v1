@@ -4,6 +4,7 @@ import 'package:portfolio/utils/constants.dart';
 
 class DesktopTableHeaderContent extends StatelessWidget {
   final double multiplierSize;
+
   DesktopTableHeaderContent({super.key, required this.multiplierSize});
 
   final List<String> tableHeaderList = [
@@ -17,9 +18,7 @@ class DesktopTableHeaderContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return BlurryContainer(
       blur: 50,
       width: size.width,
@@ -27,8 +26,14 @@ class DesktopTableHeaderContent extends StatelessWidget {
       color: bgColor.withOpacity(0.1),
       padding: const EdgeInsets.all(0),
       borderRadius: const BorderRadius.all(Radius.circular(0)),
-      child: SizedBox(width: double.infinity, height: 52.5, child: headers(),),);
+      child: SizedBox(
+        width: double.infinity,
+        height: 52.5,
+        child: headers(),
+      ),
+    );
   }
+
   Widget headers() {
     final heading = <Widget>[];
     for (int i = 0; i < tableHeaderList.length; i++) {

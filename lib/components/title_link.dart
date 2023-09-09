@@ -7,6 +7,7 @@ import '../utils/constants.dart';
 class TitleLink extends StatefulWidget {
   final String url;
   final String title;
+
   const TitleLink({super.key, required this.url, required this.title});
 
   @override
@@ -19,7 +20,9 @@ class _TitleLinkState extends State<TitleLink> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor: (widget.url != "") ? SystemMouseCursors.click : SystemMouseCursors.basic,
+      cursor: (widget.url != "")
+          ? SystemMouseCursors.click
+          : SystemMouseCursors.basic,
       opaque: false,
       onEnter: (event) {
         setState(() {
@@ -37,12 +40,12 @@ class _TitleLinkState extends State<TitleLink> {
             html.window.open(widget.url, "_blank");
           }
         },
-        onLongPressDown: (onLong){
+        onLongPressDown: (onLong) {
           setState(() {
             isHover = true;
           });
         },
-        onLongPressUp: (){
+        onLongPressUp: () {
           setState(() {
             isHover = false;
           });
@@ -61,20 +64,19 @@ class _TitleLinkState extends State<TitleLink> {
               ),
               (widget.url != "")
                   ? WidgetSpan(
-                child: AnimatedPadding(
-                  padding:
-                  EdgeInsets.only(left: isHover ? 12.32 : 7.84),
-                  duration: const Duration(milliseconds: 300),
-                  child: SvgPicture.asset(
-                    'assets/images/angle-right-solid.svg',
-                    colorFilter: ColorFilter.mode(
-                      isHover ? neonBlue : white,
-                      BlendMode.srcIn,
-                    ),
-                    height: 15,
-                  ),
-                ),
-              )
+                      child: AnimatedPadding(
+                        padding: EdgeInsets.only(left: isHover ? 12.32 : 7.84),
+                        duration: const Duration(milliseconds: 300),
+                        child: SvgPicture.asset(
+                          'assets/images/angle-right-solid.svg',
+                          colorFilter: ColorFilter.mode(
+                            isHover ? neonBlue : white,
+                            BlendMode.srcIn,
+                          ),
+                          height: 15,
+                        ),
+                      ),
+                    )
                   : const WidgetSpan(child: SizedBox.shrink()),
             ],
           ),

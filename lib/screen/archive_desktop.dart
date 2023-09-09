@@ -13,7 +13,8 @@ import '../utils/glow_circle.dart';
 class ArchiveDesktop extends StatefulWidget {
   final double multiplierSize;
 
-  const ArchiveDesktop({Key? key, required this.multiplierSize}) : super(key: key);
+  const ArchiveDesktop({Key? key, required this.multiplierSize})
+      : super(key: key);
 
   @override
   State<ArchiveDesktop> createState() => _ArchiveDesktopState();
@@ -93,156 +94,147 @@ class _ArchiveDesktopState extends State<ArchiveDesktop>
           painter: GlowingCirclePainter(
             center: Offset(xPosition, yPosition),
           ),
-          child: FutureBuilder(
-              future: loadData(),
-              builder: (context, snapshot) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 1155 * width,
-                    height: double.infinity,
-                    child: ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-                      child: ScrollablePositionedList.builder(
-                        itemCount: 2,
-                        itemScrollController: _scrollController,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return StickyHeader(
-                              header: const SizedBox.shrink(),
-                              content: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 90),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        MouseRegion(
-                                          cursor: SystemMouseCursors.click,
-                                          opaque: false,
-                                          onEnter: (event) {
-                                            setState(() {
-                                              isHover = true;
-                                            });
+          child: FutureBuilder(builder: (context, snapshot) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 1155 * width,
+                  height: double.infinity,
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(context)
+                        .copyWith(scrollbars: false),
+                    child: ScrollablePositionedList.builder(
+                      itemCount: 2,
+                      itemScrollController: _scrollController,
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return StickyHeader(
+                            header: const SizedBox.shrink(),
+                            content: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 90),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        opaque: false,
+                                        onEnter: (event) {
+                                          setState(() {
+                                            isHover = true;
+                                          });
+                                        },
+                                        onExit: (event) {
+                                          setState(() {
+                                            isHover = false;
+                                          });
+                                        },
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .pushReplacementNamed("/");
                                           },
-                                          onExit: (event) {
-                                            setState(() {
-                                              isHover = false;
-                                            });
-                                          },
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              Navigator.of(context)
-                                                  .pushReplacementNamed("/");
-                                            },
-                                            child: Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  WidgetSpan(
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          left: 10),
-                                                      child: SizedBox(
-                                                        width: 40,
-                                                        child: AnimatedPadding(
-                                                          duration: const Duration(
-                                                              milliseconds: 100),
-                                                          padding: EdgeInsets.only(
-                                                              left: isHover ? 0 : 15),
-                                                          child: SvgPicture.asset(
-                                                            'assets/images/angle-left-solid.svg',
-                                                            colorFilter:
-                                                                ColorFilter.mode(
-                                                              neonBlue,
-                                                              BlendMode.srcIn,
-                                                            ),
-                                                            height: 15.68,
+                                          child: Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10),
+                                                    child: SizedBox(
+                                                      width: 40,
+                                                      child: AnimatedPadding(
+                                                        duration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    100),
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: isHover
+                                                                    ? 0
+                                                                    : 15),
+                                                        child: SvgPicture.asset(
+                                                          'assets/images/angle-left-solid.svg',
+                                                          colorFilter:
+                                                              ColorFilter.mode(
+                                                            neonBlue,
+                                                            BlendMode.srcIn,
                                                           ),
+                                                          height: 15.68,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                  WidgetSpan(
-                                                    child: SizedBox(
-                                                      height: 15.68,
-                                                      child: Text(
-                                                        'NIHAAL SHIRKAR',
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: neonBlue,
-                                                            fontFamily: 'SFProBold',
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            letterSpacing: 1.2),
-                                                      ),
+                                                ),
+                                                WidgetSpan(
+                                                  child: SizedBox(
+                                                    height: 15.68,
+                                                    child: Text(
+                                                      'NIHAAL SHIRKAR',
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: neonBlue,
+                                                          fontFamily:
+                                                              'SFProBold',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          letterSpacing: 1.2),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 30.0, top: 8, bottom: 48),
-                                    child: Text(
-                                      'All Projects',
-                                      style: TextStyle(
-                                          fontSize: 46,
-                                          color: white,
-                                          fontFamily: 'SFProMedium',
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: 1.2),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                              child: StickyHeader(
-                                header: Padding(
-                                  padding: const EdgeInsets.only(bottom: 1.0),
-                                  child: DesktopTableHeaderContent(multiplierSize: width),
                                 ),
-                                content: DesktopTableData(multiplierSize: width),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 30.0, top: 8, bottom: 48),
+                                  child: Text(
+                                    'All Projects',
+                                    style: TextStyle(
+                                        fontSize: 46,
+                                        color: white,
+                                        fontFamily: 'SFProMedium',
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 1.2),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: StickyHeader(
+                              header: Padding(
+                                padding: const EdgeInsets.only(bottom: 1.0),
+                                child: DesktopTableHeaderContent(
+                                    multiplierSize: width),
                               ),
-                            );
-                          }
-                        },
-                      ),
+                              content: DesktopTableData(multiplierSize: width),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ),
-                ],
-              );
-            }
-          ),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
-  }
-  Future<void> loadData() async {
-    try {
-      final aboutSnapshot =
-      await FirebaseFirestore.instance.collection('about').get();
-      final experienceSnapshot =
-      await FirebaseFirestore.instance.collection('experience').get();
-      final projectsSnapshot =
-      await FirebaseFirestore.instance.collection('projects').get();
-
-      final aboutData = aboutSnapshot.docs.map((doc) => doc.data()).toList();
-      final experienceData =
-      experienceSnapshot.docs.map((doc) => doc.data()).toList();
-      final projectsData =
-      projectsSnapshot.docs.map((doc) => doc.data()).toList();
-    } catch (_) {}
   }
 }

@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:universal_html/html.dart' as html;
 
-
 import '../components/desktop/desktop_experience_card.dart';
 import '../components/desktop/desktop_project_card.dart';
 import '../components/nav_button.dart';
@@ -33,10 +32,16 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
       ItemPositionsListener.create();
   late int activeIndex = 0;
 
-  List<String> buttonTitles = ['ABOUT', 'EXPERIENCE', 'PROJECTS'];
+  List<String> buttonTitles = [
+    'ABOUT',
+    'EXPERIENCE',
+    'PROJECTS',
+    'GET IN TOUCH'
+  ];
   late List<Widget> sectionContent;
   bool isHover = false;
   bool isHoverProject = false;
+  bool isHoverContact = false;
   bool gitHover = false;
   bool linkedinHover = false;
   late double multiplierSize;
@@ -95,7 +100,6 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
     if (state == AppLifecycleState.resumed) {}
   }
 
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -114,7 +118,8 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
       sectionContent = [
         about(size),
         experience(size, width),
-        projects(size, width)
+        projects(size, width),
+        contact(size, width)
       ];
     });
 
@@ -127,184 +132,180 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
           painter: GlowingCirclePainter(
             center: Offset(xPosition, yPosition),
           ),
-          child: FutureBuilder(
-              future: loadData(),
-              builder: (context, snapshot) {
-                return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 510 * width,
-                    height: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: size.height * 0.06),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "NIHAAL SHIRKAR",
-                            style: TextStyle(
-                                fontSize: 40,
-                                color: white,
-                                fontFamily: 'SFProBold',
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 3),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              "BACHELOR OF ENGINEERING (COMPUTER)",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: white,
-                                  fontFamily: 'SFProMedium',
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 2),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: SizedBox(
-                              width: 537.6,
-                              child: Text(
-                                "I enjoy creating Android apps that focus on the user, aiming to provide smooth and enjoyable digital experiences.",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: lightBlue,
-                                    fontFamily: 'SFProMedium',
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 1),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: size.height * 0.05),
-                            child: SizedBox(
-                              height: size.height * 0.25,
-                              child: ListView.builder(
-                                itemCount: buttonTitles.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                      padding:
-                                          EdgeInsets.only(top: size.height * 0.02),
-                                      child: HoverButton(
-                                        title: buttonTitles[index],
-                                        onTap: () {
-                                          _scrollToSection(index);
-                                        },
-                                        isActive: _isActive(index),
-                                      ));
-                                },
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 30),
-                                child: Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        html.window.open(
-                                            'https://github.com/Nihaal15',
-                                            "_blank");
-                                      },
-                                      child: MouseRegion(
-                                        onEnter: (PointerEnterEvent data) {
-                                          setState(() {
-                                            gitHover = true;
-                                          });
-                                        },
-                                        onExit: (PointerExitEvent data) {
-                                          setState(() {
-                                            gitHover = false;
-                                          });
-                                        },
-                                        opaque: false,
-                                        child: AnimatedOpacity(
-                                          duration:
-                                              const Duration(milliseconds: 200),
-                                          opacity: gitHover ? 1 : 0.5,
-                                          child: SvgPicture.asset(
-                                            'assets/images/github.svg',
-                                            colorFilter: ColorFilter.mode(
-                                              white,
-                                              BlendMode.srcIn,
-                                            ),
-                                            height: 28,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 20),
-                                    InkWell(
-                                      onTap: () {
-                                        html.window.open(
-                                            'https://www.linkedin.com/in/nihaalshirkar15/',
-                                            "_blank");
-                                      },
-                                      child: MouseRegion(
-                                        onEnter: (PointerEnterEvent data) {
-                                          setState(() {
-                                            linkedinHover = true;
-                                          });
-                                        },
-                                        onExit: (PointerExitEvent data) {
-                                          setState(() {
-                                            linkedinHover = false;
-                                          });
-                                        },
-                                        opaque: false,
-                                        child: AnimatedOpacity(
-                                          duration:
-                                              const Duration(milliseconds: 200),
-                                          opacity: linkedinHover ? 1 : 0.5,
-                                          child: SvgPicture.asset(
-                                            'assets/images/linkedin.svg',
-                                            colorFilter: ColorFilter.mode(
-                                              white,
-                                              BlendMode.srcIn,
-                                            ),
-                                            height: 28,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: size.width * width * 0.03),
-                  SizedBox(
-                    height: double.infinity,
-                    width: 590 * width,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: size.height * 0.06),
-                      child: ScrollConfiguration(
-                        behavior: ScrollConfiguration.of(context)
-                            .copyWith(scrollbars: false),
-                        child: ScrollablePositionedList.builder(
-                          itemScrollController: _scrollController,
-                          itemPositionsListener: itemPositionsListener,
-                          itemCount: buttonTitles.length,
-                          itemBuilder: (context, index) => item(index),
+          child: FutureBuilder(builder: (context, snapshot) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 510 * width,
+                  height: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: size.height * 0.06),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "NIHAAL SHIRKAR",
+                          style: TextStyle(
+                              fontSize: 40,
+                              color: white,
+                              fontFamily: 'SFProBold',
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 3),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            "BACHELOR OF ENGINEERING (COMPUTER)",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: white,
+                                fontFamily: 'SFProMedium',
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 2),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: SizedBox(
+                            width: 537.6,
+                            child: Text(
+                              "I enjoy creating Android apps that focus on the user, aiming to provide smooth and enjoyable digital experiences.",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: lightBlue,
+                                  fontFamily: 'SFProMedium',
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 1),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.05),
+                          child: SizedBox(
+                            height: size.height * 0.25,
+                            child: ListView.builder(
+                              itemCount: buttonTitles.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                    padding: EdgeInsets.only(
+                                        top: size.height * 0.02),
+                                    child: HoverButton(
+                                      title: buttonTitles[index],
+                                      onTap: () {
+                                        _scrollToSection(index);
+                                      },
+                                      isActive: _isActive(index),
+                                    ));
+                              },
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 30),
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      html.window.open(
+                                          'https://github.com/Nihaal15',
+                                          "_blank");
+                                    },
+                                    child: MouseRegion(
+                                      onEnter: (PointerEnterEvent data) {
+                                        setState(() {
+                                          gitHover = true;
+                                        });
+                                      },
+                                      onExit: (PointerExitEvent data) {
+                                        setState(() {
+                                          gitHover = false;
+                                        });
+                                      },
+                                      opaque: false,
+                                      child: AnimatedOpacity(
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        opacity: gitHover ? 1 : 0.5,
+                                        child: SvgPicture.asset(
+                                          'assets/images/github.svg',
+                                          colorFilter: ColorFilter.mode(
+                                            white,
+                                            BlendMode.srcIn,
+                                          ),
+                                          height: 28,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  InkWell(
+                                    onTap: () {
+                                      html.window.open(
+                                          'https://www.linkedin.com/in/nihaalshirkar15/',
+                                          "_blank");
+                                    },
+                                    child: MouseRegion(
+                                      onEnter: (PointerEnterEvent data) {
+                                        setState(() {
+                                          linkedinHover = true;
+                                        });
+                                      },
+                                      onExit: (PointerExitEvent data) {
+                                        setState(() {
+                                          linkedinHover = false;
+                                        });
+                                      },
+                                      opaque: false,
+                                      child: AnimatedOpacity(
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        opacity: linkedinHover ? 1 : 0.5,
+                                        child: SvgPicture.asset(
+                                          'assets/images/linkedin.svg',
+                                          colorFilter: ColorFilter.mode(
+                                            white,
+                                            BlendMode.srcIn,
+                                          ),
+                                          height: 28,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: size.width * width * 0.03),
+                SizedBox(
+                  height: double.infinity,
+                  width: 590 * width,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: size.height * 0.06),
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(context)
+                          .copyWith(scrollbars: false),
+                      child: ScrollablePositionedList.builder(
+                        itemScrollController: _scrollController,
+                        itemPositionsListener: itemPositionsListener,
+                        itemCount: buttonTitles.length,
+                        itemBuilder: (context, index) => item(index),
                       ),
                     ),
                   ),
-                  // SizedBox(width: size.width * 0.253,)
-                ],
-              );
-            }
-          ),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
@@ -331,11 +332,13 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
 
     return Column(
       children: [
-        StreamBuilder<QuerySnapshot>(
-          stream: aboutStream,
+        FutureBuilder<QuerySnapshot>(
+          future: aboutStream.first,
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError || !snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            if (snapshot.hasError ||
+                !snapshot.hasData ||
+                snapshot.data!.docs.isEmpty) {
               return const SizedBox.shrink();
             }
             final documents = snapshot.data!.docs;
@@ -383,8 +386,8 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        StreamBuilder<QuerySnapshot>(
-          stream: experienceStream,
+        FutureBuilder<QuerySnapshot>(
+          future: experienceStream.first,
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError ||
@@ -501,8 +504,8 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        StreamBuilder<QuerySnapshot>(
-          stream: projectStream,
+        FutureBuilder<QuerySnapshot>(
+          future: projectStream.first,
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError ||
@@ -583,6 +586,127 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
                       child: AnimatedPadding(
                         padding: EdgeInsets.only(
                             left: isHoverProject ? 14.56 : 7.84,
+                            bottom: size.height * 0.001),
+                        duration: const Duration(milliseconds: 200),
+                        child: SvgPicture.asset(
+                          'assets/images/arrow-right-solid.svg',
+                          colorFilter: ColorFilter.mode(
+                            white,
+                            BlendMode.srcIn,
+                          ),
+                          height: 17.92,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: size.height * 0.08,
+        ),
+      ],
+    );
+  }
+
+  Widget contact(Size size, double width) {
+    final Stream<QuerySnapshot> aboutStream =
+        FirebaseFirestore.instance.collection('contact').snapshots();
+    String mail = "";
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FutureBuilder<QuerySnapshot>(
+          future: aboutStream.first,
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError ||
+                !snapshot.hasData ||
+                snapshot.data!.docs.isEmpty) {
+              return const SizedBox.shrink();
+            }
+            final documents = snapshot.data!.docs;
+            final para = <Widget>[];
+            for (final document in documents) {
+              final content = document['para'];
+              mail = document['mail'];
+              para.add(
+                SizedBox(
+                  width: 499.52,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 6.0),
+                    child: Text(
+                      content,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          fontSize: 16,
+                          height: 1.75,
+                          color: lightBlue,
+                          fontFamily: 'SFProRegular',
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1),
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            return Padding(
+              padding: const EdgeInsets.only(left: 33.6),
+              child: Column(
+                children: para,
+              ),
+            );
+          },
+        ),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          opaque: false,
+          onEnter: (event) {
+            setState(() {
+              isHoverContact = true;
+            });
+          },
+          onExit: (event) {
+            setState(() {
+              isHoverContact = false;
+            });
+          },
+          child: Padding(
+            padding: EdgeInsets.only(left: 33.6, top: size.height * 0.01),
+            child: GestureDetector(
+              onTap: () {
+                html.window.open("mailto:$mail", "_blank");
+              },
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Say Hello!',
+                      style: TextStyle(
+                          fontSize: 16,
+                          height: 1.75,
+                          shadows: [
+                            Shadow(color: white, offset: const Offset(0, -2.5))
+                          ],
+                          decoration: isHoverContact
+                              ? TextDecoration.underline
+                              : TextDecoration.none,
+                          decorationColor:
+                              isHoverContact ? neonBlue : Colors.transparent,
+                          decorationThickness: isHoverContact ? 1.5 : 0.0,
+                          color: Colors.transparent,
+                          fontFamily: 'SFProMedium',
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1),
+                    ),
+                    WidgetSpan(
+                      child: AnimatedPadding(
+                        padding: EdgeInsets.only(
+                            left: isHoverContact ? 14.56 : 7.84,
                             bottom: size.height * 0.001),
                         duration: const Duration(milliseconds: 200),
                         child: SvgPicture.asset(
@@ -728,21 +852,8 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
               ),
             ]),
           ),
-        )
+        ),
       ],
     );
-  }
-
-  Future<void> loadData() async {
-    try {
-      final aboutSnapshot = await FirebaseFirestore.instance.collection('about').get();
-      final experienceSnapshot = await FirebaseFirestore.instance.collection('experience').get();
-      final projectsSnapshot = await FirebaseFirestore.instance.collection('projects').get();
-
-      final aboutData = aboutSnapshot.docs.map((doc) => doc.data()).toList();
-      final experienceData = experienceSnapshot.docs.map((doc) => doc.data()).toList();
-      final projectsData = projectsSnapshot.docs.map((doc) => doc.data()).toList();
-
-    } catch (_) {}
   }
 }

@@ -105,9 +105,7 @@ class _DesktopExperienceCardState extends State<DesktopExperienceCard> {
                               TextSpan(
                                 text: '${widget.title}  ·  ${widget.company}',
                                 style: TextStyle(
-                                    color: isHover
-                                        ? neonBlue
-                                        : white,
+                                    color: isHover ? neonBlue : white,
                                     fontSize: 15 +
                                         (widget.width - 0.75) *
                                             (16 - 15) /
@@ -164,8 +162,7 @@ class _DesktopExperienceCardState extends State<DesktopExperienceCard> {
                                     surfaceTintColor: Colors.transparent,
                                     disabledBackgroundColor:
                                         const Color(0xFF122b39),
-                                    disabledForegroundColor:
-                                        neonBlue,
+                                    disabledForegroundColor: neonBlue,
                                     shadowColor: Colors.transparent,
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(

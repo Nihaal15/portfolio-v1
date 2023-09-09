@@ -6,6 +6,7 @@ import '../link.dart';
 
 class DesktopTableData extends StatefulWidget {
   final double multiplierSize;
+
   const DesktopTableData({super.key, required this.multiplierSize});
 
   @override
@@ -14,7 +15,6 @@ class DesktopTableData extends StatefulWidget {
 
 class _DesktopTableDataState extends State<DesktopTableData> {
   final List<double> tableHeaderWidth = [64.13, 271.05, 143.27, 368.03, 241.53];
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class _DesktopTableDataState extends State<DesktopTableData> {
     final Stream<QuerySnapshot> projectStream =
         FirebaseFirestore.instance.collection('projects').snapshots();
 
-    return StreamBuilder(
-      stream: projectStream,
+    return FutureBuilder(
+      future: projectStream.first,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError ||
             !snapshot.hasData ||
@@ -56,7 +56,8 @@ class _DesktopTableDataState extends State<DesktopTableData> {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: tableHeaderWidth[0] * widget.multiplierSize * 0.9,
+                        width:
+                            tableHeaderWidth[0] * widget.multiplierSize * 0.9,
                         child: Text(
                           year,
                           style: TextStyle(
@@ -67,7 +68,8 @@ class _DesktopTableDataState extends State<DesktopTableData> {
                         ),
                       ),
                       SizedBox(
-                        width: tableHeaderWidth[1] * widget.multiplierSize * 0.9,
+                        width:
+                            tableHeaderWidth[1] * widget.multiplierSize * 0.9,
                         child: Text(
                           title,
                           style: TextStyle(
@@ -78,7 +80,8 @@ class _DesktopTableDataState extends State<DesktopTableData> {
                         ),
                       ),
                       SizedBox(
-                        width: tableHeaderWidth[2] * widget.multiplierSize * 0.9,
+                        width:
+                            tableHeaderWidth[2] * widget.multiplierSize * 0.9,
                         child: Text(
                           company,
                           style: TextStyle(
@@ -89,7 +92,8 @@ class _DesktopTableDataState extends State<DesktopTableData> {
                         ),
                       ),
                       SizedBox(
-                        width: tableHeaderWidth[3] * widget.multiplierSize * 0.9,
+                        width:
+                            tableHeaderWidth[3] * widget.multiplierSize * 0.9,
                         child: Wrap(
                           spacing: 8.0,
                           runSpacing: 8.0,
@@ -122,7 +126,9 @@ class _DesktopTableDataState extends State<DesktopTableData> {
                       ),
                       Link(
                         tableHeaderWidth: tableHeaderWidth,
-                        url: url, multiplierSize: widget.multiplierSize, index: 4,
+                        url: url,
+                        multiplierSize: widget.multiplierSize,
+                        index: 4,
                       ),
                     ],
                   ),

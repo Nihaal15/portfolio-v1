@@ -86,9 +86,7 @@ class _DesktopProjectCardState extends State<DesktopProjectCard> {
                           TextSpan(
                             text: widget.title,
                             style: TextStyle(
-                                color: isHover
-                                    ? neonBlue
-                                    : white,
+                                color: isHover ? neonBlue : white,
                                 fontSize: 15 +
                                     (widget.width - 0.75) *
                                         (16 - 15) /
@@ -101,14 +99,11 @@ class _DesktopProjectCardState extends State<DesktopProjectCard> {
                                   child: AnimatedPadding(
                                     padding: EdgeInsets.only(
                                         left: isHover ? 12.32 : 7.84),
-                                    duration:
-                                        const Duration(milliseconds: 300),
+                                    duration: const Duration(milliseconds: 300),
                                     child: SvgPicture.asset(
                                       'assets/images/angle-right-solid.svg',
                                       colorFilter: ColorFilter.mode(
-                                        isHover
-                                            ? neonBlue
-                                            : white,
+                                        isHover ? neonBlue : white,
                                         BlendMode.srcIn,
                                       ),
                                       height: 17.92,
@@ -147,13 +142,11 @@ class _DesktopProjectCardState extends State<DesktopProjectCard> {
                             return ElevatedButton(
                               onPressed: null,
                               style: ElevatedButton.styleFrom(
-                                enabledMouseCursor:
-                                    SystemMouseCursors.basic,
+                                enabledMouseCursor: SystemMouseCursors.basic,
                                 surfaceTintColor: Colors.transparent,
                                 disabledBackgroundColor:
                                     const Color(0xFF122b39),
-                                disabledForegroundColor:
-                                    neonBlue,
+                                disabledForegroundColor: neonBlue,
                                 shadowColor: Colors.transparent,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(

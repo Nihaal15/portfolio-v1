@@ -61,150 +61,132 @@ class _ArchiveTabletState extends State<ArchiveTablet>
 
     return Scaffold(
       backgroundColor: bgColor,
-      body: FutureBuilder(
-          future: loadData(),
-          builder: (context, snapshot) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: size.width * 0.9175,
-                height: double.infinity,
-                child: ScrollConfiguration(
-                  behavior:
-                      ScrollConfiguration.of(context).copyWith(scrollbars: false),
-                  child: ScrollablePositionedList.builder(
-                    itemCount: 2,
-                    itemScrollController: _scrollController,
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return StickyHeader(
-                          header: const SizedBox.shrink(),
-                          content: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 0.08 * size.width),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    MouseRegion(
-                                      cursor: SystemMouseCursors.click,
-                                      opaque: false,
-                                      onEnter: (event) {
-                                        setState(() {
-                                          isHover = true;
-                                        });
+      body: FutureBuilder(builder: (context, snapshot) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: size.width * 0.9175,
+              height: double.infinity,
+              child: ScrollConfiguration(
+                behavior:
+                    ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                child: ScrollablePositionedList.builder(
+                  itemCount: 2,
+                  itemScrollController: _scrollController,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return StickyHeader(
+                        header: const SizedBox.shrink(),
+                        content: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 0.08 * size.width),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    opaque: false,
+                                    onEnter: (event) {
+                                      setState(() {
+                                        isHover = true;
+                                      });
+                                    },
+                                    onExit: (event) {
+                                      setState(() {
+                                        isHover = false;
+                                      });
+                                    },
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .pushReplacementNamed("/");
                                       },
-                                      onExit: (event) {
-                                        setState(() {
-                                          isHover = false;
-                                        });
-                                      },
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context)
-                                              .pushReplacementNamed("/");
-                                        },
-                                        child: Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              WidgetSpan(
-                                                child: SizedBox(
-                                                  width: 25,
-                                                  child: AnimatedPadding(
-                                                    duration: const Duration(
-                                                        milliseconds: 100),
-                                                    padding: EdgeInsets.only(
-                                                        right: isHover ? 10 : 0),
-                                                    child: SvgPicture.asset(
-                                                      'assets/images/angle-left-solid.svg',
-                                                      colorFilter: ColorFilter.mode(
-                                                        neonBlue,
-                                                        BlendMode.srcIn,
-                                                      ),
-                                                      height: 15.68,
+                                      child: Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: SizedBox(
+                                                width: 25,
+                                                child: AnimatedPadding(
+                                                  duration: const Duration(
+                                                      milliseconds: 100),
+                                                  padding: EdgeInsets.only(
+                                                      right: isHover ? 10 : 0),
+                                                  child: SvgPicture.asset(
+                                                    'assets/images/angle-left-solid.svg',
+                                                    colorFilter:
+                                                        ColorFilter.mode(
+                                                      neonBlue,
+                                                      BlendMode.srcIn,
                                                     ),
+                                                    height: 15.68,
                                                   ),
                                                 ),
                                               ),
-                                              WidgetSpan(
-                                                child: SizedBox(
-                                                  height: 15.68,
-                                                  child: Text(
-                                                    'NIHAAL SHIRKAR',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: neonBlue,
-                                                        fontFamily: 'SFProBold',
-                                                        fontWeight: FontWeight.bold,
-                                                        letterSpacing: 1.2),
-                                                  ),
+                                            ),
+                                            WidgetSpan(
+                                              child: SizedBox(
+                                                height: 15.68,
+                                                child: Text(
+                                                  'NIHAAL SHIRKAR',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: neonBlue,
+                                                      fontFamily: 'SFProBold',
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      letterSpacing: 1.2),
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, top: 8, bottom: 48),
-                                child: Text(
-                                  'All Projects',
-                                  style: TextStyle(
-                                      fontSize: 46,
-                                      color: white,
-                                      fontFamily: 'SFProMedium',
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 1.2),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: StickyHeader(
-                            header: const Padding(
-                              padding: EdgeInsets.only(bottom: 3.0),
-                              child: TabletTableHeaderContent(),
                             ),
-                            content: const TabletTableData(),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, top: 8, bottom: 48),
+                              child: Text(
+                                'All Projects',
+                                style: TextStyle(
+                                    fontSize: 46,
+                                    color: white,
+                                    fontFamily: 'SFProMedium',
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 1.2),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: StickyHeader(
+                          header: const Padding(
+                            padding: EdgeInsets.only(bottom: 3.0),
+                            child: TabletTableHeaderContent(),
                           ),
-                        );
-                      }
-                    },
-                  ),
+                          content: const TabletTableData(),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
-            ],
-          );
-        }
-      ),
+            ),
+          ],
+        );
+      }),
     );
-  }
-
-  Future<void> loadData() async {
-    try {
-      final aboutSnapshot =
-      await FirebaseFirestore.instance.collection('about').get();
-      final experienceSnapshot =
-      await FirebaseFirestore.instance.collection('experience').get();
-      final projectsSnapshot =
-      await FirebaseFirestore.instance.collection('projects').get();
-
-      final aboutData = aboutSnapshot.docs.map((doc) => doc.data()).toList();
-      final experienceData =
-      experienceSnapshot.docs.map((doc) => doc.data()).toList();
-      final projectsData =
-      projectsSnapshot.docs.map((doc) => doc.data()).toList();
-    } catch (_) {}
   }
 }

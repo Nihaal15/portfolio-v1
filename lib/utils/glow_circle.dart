@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'constants.dart';
 
-
-
 void drawGlowingCircle(
-    Canvas canvas,
-    Size size,
-    Offset center,
-    double radius,
-    List<Color> gradientColors,
-    ) {
+  Canvas canvas,
+  Size size,
+  Offset center,
+  double radius,
+  List<Color> gradientColors,
+) {
   final Gradient gradient = RadialGradient(
     colors: gradientColors,
   );
 
   final Paint paint = Paint()
     ..shader =
-    gradient.createShader(Rect.fromCircle(center: center, radius: radius));
+        gradient.createShader(Rect.fromCircle(center: center, radius: radius));
 
   // Draw the glowing circle with a shadow
   canvas.drawShadow(

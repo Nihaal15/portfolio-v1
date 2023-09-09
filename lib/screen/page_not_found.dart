@@ -91,8 +91,7 @@ class _PageNotFoundState extends State<PageNotFound>
                       fontSize: min(size.width * 0.05, size.height * 0.1),
                       color: const Color(0xFFd2dfff),
                       fontFamily: 'SFProMedium',
-                      fontWeight:
-                      FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                       letterSpacing: 2),
                 ),
               ],

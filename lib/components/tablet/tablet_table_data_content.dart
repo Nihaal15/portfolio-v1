@@ -14,18 +14,15 @@ class TabletTableData extends StatefulWidget {
 class _TabletTableDataState extends State<TabletTableData> {
   final List<double> tableHeaderWidth = [85, 500.66, 324.34];
 
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return records(size);
   }
 
   Widget records(size) {
     final Stream<QuerySnapshot> projectStream =
-    FirebaseFirestore.instance.collection('projects').snapshots();
+        FirebaseFirestore.instance.collection('projects').snapshots();
 
     return StreamBuilder(
       stream: projectStream,
@@ -79,7 +76,9 @@ class _TabletTableDataState extends State<TabletTableData> {
                       ),
                       Link(
                         tableHeaderWidth: tableHeaderWidth,
-                        url: url, multiplierSize: 0.75, index: 2,
+                        url: url,
+                        multiplierSize: 0.75,
+                        index: 2,
                       ),
                     ],
                   ),

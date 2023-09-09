@@ -15,16 +15,17 @@ class MobileExperienceCard extends StatefulWidget {
   final String url;
   final double width;
 
-  const MobileExperienceCard(
-      {super.key,
-      required this.company,
-      required this.title,
-      required this.description,
-      required this.tags,
-      required this.from,
-      required this.to,
-      required this.url,
-      required this.width,});
+  const MobileExperienceCard({
+    super.key,
+    required this.company,
+    required this.title,
+    required this.description,
+    required this.tags,
+    required this.from,
+    required this.to,
+    required this.url,
+    required this.width,
+  });
 
   @override
   State<MobileExperienceCard> createState() => _MobileExperienceCardState();
@@ -96,19 +97,15 @@ class _MobileExperienceCardState extends State<MobileExperienceCard> {
                     TextSpan(
                       text: '${widget.title}  ·  ${widget.company}',
                       style: TextStyle(
-                          color:
-                          isHover ? neonBlue : white,
+                          color: isHover ? neonBlue : white,
                           fontSize: 15 +
-                              (widget.width - 0.5) *
-                                  (16 - 15) /
-                                  (0.75 - 0.5),
+                              (widget.width - 0.5) * (16 - 15) / (0.75 - 0.5),
                           fontWeight: FontWeight.w500,
                           fontFamily: 'SFProMedium'),
                     ),
                     WidgetSpan(
                       child: AnimatedPadding(
-                        padding:
-                        EdgeInsets.only(left: isHover ? 12.32 : 7.84),
+                        padding: EdgeInsets.only(left: isHover ? 12.32 : 7.84),
                         duration: const Duration(milliseconds: 300),
                         child: SvgPicture.asset(
                           'assets/images/angle-right-solid.svg',
@@ -128,8 +125,7 @@ class _MobileExperienceCardState extends State<MobileExperienceCard> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: SizedBox(
-              width:
-              391 + (size.width - 0.3) * (698 - 391) / (0.75 - 0.3),
+              width: 391 + (size.width - 0.3) * (698 - 391) / (0.75 - 0.3),
               child: Text(
                 widget.description,
                 textAlign: TextAlign.justify,
