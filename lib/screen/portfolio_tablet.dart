@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,10 +12,18 @@ import '../utils/constants.dart';
 
 class PortfolioTablet extends StatefulWidget {
   final double multiplierSize;
+  final List<String> aboutData;
+  final List<Map<String, dynamic>> experienceData;
+  final List<Map<String, dynamic>> projectData;
+  final List<Map<String, dynamic>> contactData;
 
   const PortfolioTablet({
     super.key,
     required this.multiplierSize,
+    required this.aboutData,
+    required this.experienceData,
+    required this.projectData,
+    required this.contactData,
   });
 
   @override
@@ -206,54 +213,60 @@ class _PortfolioTabletState extends State<PortfolioTablet>
                         ),
                       );
                     } else if (index == 1) {
+                      final paras = <Widget>[];
+                      for (final i in widget.aboutData) {
+                        paras.add(
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: Text(
+                              i,
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  height: 1.75,
+                                  color: lightBlue,
+                                  fontFamily: 'SFProRegular',
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 1),
+                            ),
+                          ),
+                        );
+                      }
                       return StickyHeader(
                         header: const HeaderContent(text: "ABOUT"),
                         content: Padding(
                           padding: const EdgeInsets.only(top: 23.0, bottom: 95),
-                          child: FutureBuilder<QuerySnapshot>(
-                            future: FirebaseFirestore.instance
-                                .collection('about')
-                                .snapshots()
-                                .first,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (snapshot.hasError) {
-                                return const SizedBox.shrink();
-                              }
-                              if (!snapshot.hasData ||
-                                  snapshot.data!.docs.isEmpty) {
-                                return const SizedBox.shrink();
-                              }
-                              final documents = snapshot.data!.docs;
-                              final paras = <Widget>[];
-                              for (final document in documents) {
-                                final content = document['para'];
-                                paras.add(
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 12.0),
-                                    child: Text(
-                                      content,
-                                      textAlign: TextAlign.justify,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          height: 1.75,
-                                          color: lightBlue,
-                                          fontFamily: 'SFProRegular',
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: 1),
-                                    ),
-                                  ),
-                                );
-                              }
-
-                              return Column(
-                                children: paras,
-                              );
-                            },
+                          child: Column(
+                            children: paras,
                           ),
                         ),
                       );
                     } else if (index == 2) {
+                      final card = <Widget>[];
+                      for (final i in widget.experienceData.reversed) {
+                        card.add(
+                          (widget.multiplierSize == 0.75)
+                              ? TabletExperienceCard(
+                                  company: i['company'],
+                                  title: i['title'],
+                                  description: i['description'],
+                                  tags: i['tags'],
+                                  from: i['from'],
+                                  to: i['to'],
+                                  url: i['url'],
+                                  width: width,
+                                )
+                              : MobileExperienceCard(
+                                  company: i['company'],
+                                  title: i['title'],
+                                  description: i['description'],
+                                  tags: i['tags'],
+                                  from: i['from'],
+                                  to: i['to'],
+                                  url: i['url'],
+                                  width: width),
+                        );
+                      }
                       return Padding(
                         padding: const EdgeInsets.only(top: 23.0, bottom: 95),
                         child: StickyHeader(
@@ -264,60 +277,8 @@ class _PortfolioTabletState extends State<PortfolioTablet>
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                FutureBuilder<QuerySnapshot>(
-                                  future: FirebaseFirestore.instance
-                                      .collection('experience')
-                                      .snapshots()
-                                      .first,
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasError) {
-                                      return const SizedBox.shrink();
-                                    }
-                                    if (!snapshot.hasData ||
-                                        snapshot.data!.docs.isEmpty) {
-                                      return const SizedBox.shrink();
-                                    }
-                                    final documents = snapshot.data!.docs;
-                                    final customCards = <Widget>[];
-                                    for (final document in documents) {
-                                      final company = document['company'];
-                                      final title = document['title'];
-                                      final description =
-                                          document['description'];
-                                      final tags =
-                                          List<String>.from(document['tags']);
-                                      final from = document['from'];
-                                      final to = document['to'];
-                                      final url = document['url'];
-                                      customCards.add(
-                                        (widget.multiplierSize == 0.75)
-                                            ? TabletExperienceCard(
-                                                company: company,
-                                                title: title,
-                                                description: description,
-                                                tags: tags,
-                                                from: from,
-                                                to: to,
-                                                url: url,
-                                                width: width,
-                                              )
-                                            : MobileExperienceCard(
-                                                company: company,
-                                                title: title,
-                                                description: description,
-                                                tags: tags,
-                                                from: from,
-                                                to: to,
-                                                url: url,
-                                                width: width),
-                                      );
-                                    }
-
-                                    return Column(
-                                      children: customCards,
-                                    );
-                                  },
+                                Column(
+                                  children: card,
                                 ),
                                 Padding(
                                   padding:
@@ -397,6 +358,20 @@ class _PortfolioTabletState extends State<PortfolioTablet>
                         ),
                       );
                     } else if (index == 3) {
+                      final card = <Widget>[];
+                      for (final i in widget.projectData.reversed) {
+                        card.add(
+                          TabletProjectCard(
+                            company: i['made at'],
+                            title: i['project'],
+                            description: i['description'],
+                            tags: i['tags'],
+                            year: i['year'],
+                            url: i['url'],
+                            width: width,
+                          ),
+                        );
+                      }
                       return Padding(
                         padding: const EdgeInsets.only(top: 23.0, bottom: 95),
                         child: StickyHeader(
@@ -407,49 +382,8 @@ class _PortfolioTabletState extends State<PortfolioTablet>
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                FutureBuilder<QuerySnapshot>(
-                                  future: FirebaseFirestore.instance
-                                      .collection('projects')
-                                      .snapshots()
-                                      .first,
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasError) {
-                                      return const SizedBox.shrink();
-                                    }
-                                    if (!snapshot.hasData ||
-                                        snapshot.data!.docs.isEmpty) {
-                                      return const SizedBox.shrink();
-                                    }
-                                    final documents = snapshot.data!.docs;
-                                    final customCards = <Widget>[];
-                                    for (final document in documents.reversed) {
-                                      final company = document['made at'];
-                                      final title = document['project'];
-                                      final description =
-                                          document['description'];
-                                      final tags =
-                                          List<String>.from(document['tags']);
-                                      final year = document['year'];
-                                      final url = document['url'];
-
-                                      customCards.add(
-                                        TabletProjectCard(
-                                          company: company,
-                                          title: title,
-                                          description: description,
-                                          tags: tags,
-                                          year: year,
-                                          url: url,
-                                          width: width,
-                                        ),
-                                      );
-                                    }
-
-                                    return Column(
-                                      children: customCards,
-                                    );
-                                  },
+                                Column(
+                                  children: card,
                                 ),
                                 Padding(
                                   padding:
@@ -533,7 +467,12 @@ class _PortfolioTabletState extends State<PortfolioTablet>
                         ),
                       );
                     } else if (index == 4) {
+                      String para = "";
                       String mail = "";
+                      for (final i in widget.contactData) {
+                        para = i['para'];
+                        mail = i['mail'];
+                      }
                       return Padding(
                         padding: const EdgeInsets.only(top: 23.0, bottom: 35),
                         child: StickyHeader(
@@ -545,48 +484,19 @@ class _PortfolioTabletState extends State<PortfolioTablet>
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                FutureBuilder<QuerySnapshot>(
-                                  future: FirebaseFirestore.instance
-                                      .collection('contact')
-                                      .snapshots()
-                                      .first,
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasError) {
-                                      return const SizedBox.shrink();
-                                    }
-                                    if (!snapshot.hasData ||
-                                        snapshot.data!.docs.isEmpty) {
-                                      return const SizedBox.shrink();
-                                    }
-                                    final documents = snapshot.data!.docs;
-                                    final paras = <Widget>[];
-                                    for (final document in documents) {
-                                      final content = document['para'];
-                                      mail = document['mail'];
-                                      paras.add(
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 12.0),
-                                          child: Text(
-                                            content,
-                                            textAlign: TextAlign.justify,
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                height: 1.75,
-                                                color: lightBlue,
-                                                fontFamily: 'SFProRegular',
-                                                fontWeight: FontWeight.w400,
-                                                letterSpacing: 1),
-                                          ),
-                                        ),
-                                      );
-                                    }
-
-                                    return Column(
-                                      children: paras,
-                                    );
-                                  },
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 12.0),
+                                  child: Text(
+                                    para,
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        height: 1.75,
+                                        color: lightBlue,
+                                        fontFamily: 'SFProRegular',
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 1),
+                                  ),
                                 ),
                                 Padding(
                                   padding:

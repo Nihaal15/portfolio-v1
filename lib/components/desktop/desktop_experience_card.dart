@@ -8,7 +8,7 @@ class DesktopExperienceCard extends StatefulWidget {
   final String company;
   final String title;
   final String description;
-  final List<String> tags;
+  final List<dynamic> tags;
   final String from;
   final String to;
   final String url;

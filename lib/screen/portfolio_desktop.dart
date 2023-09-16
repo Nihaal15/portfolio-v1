@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,8 +14,18 @@ import '../utils/glow_circle.dart';
 
 class PortfolioDesktop extends StatefulWidget {
   final double multiplierSize;
+  final List<String> aboutData;
+  final List<Map<String, dynamic>> experienceData;
+  final List<Map<String, dynamic>> projectData;
+  final List<Map<String, dynamic>> contactData;
 
-  const PortfolioDesktop({super.key, required this.multiplierSize});
+  const PortfolioDesktop(
+      {super.key,
+      required this.multiplierSize,
+      required this.aboutData,
+      required this.experienceData,
+      required this.projectData,
+      required this.contactData});
 
   @override
   State<PortfolioDesktop> createState() => _PortfolioDesktopState();
@@ -45,8 +54,6 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
   bool gitHover = false;
   bool linkedinHover = false;
   late double multiplierSize;
-
-  FirebaseFirestore db = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -129,11 +136,10 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
         onPointerMove: _updateLocation,
         onPointerHover: _updateLocation,
         child: CustomPaint(
-          painter: GlowingCirclePainter(
-            center: Offset(xPosition, yPosition),
-          ),
-          child: FutureBuilder(builder: (context, snapshot) {
-            return Row(
+            painter: GlowingCirclePainter(
+              center: Offset(xPosition, yPosition),
+            ),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
@@ -304,9 +310,7 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
                   ),
                 ),
               ],
-            );
-          }),
-        ),
+            )),
       ),
     );
   }
@@ -327,49 +331,33 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
   }
 
   Widget about(Size size) {
-    final Stream<QuerySnapshot> aboutStream =
-        FirebaseFirestore.instance.collection('about').snapshots();
+    final paras = <Widget>[];
+    for (final i in widget.aboutData) {
+      paras.add(
+        SizedBox(
+          width: 499.52,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12.0),
+            child: Text(
+              i,
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                  fontSize: 16,
+                  height: 1.75,
+                  color: lightBlue,
+                  fontFamily: 'SFProRegular',
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 1),
+            ),
+          ),
+        ),
+      );
+    }
 
     return Column(
       children: [
-        FutureBuilder<QuerySnapshot>(
-          future: aboutStream.first,
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError ||
-                !snapshot.hasData ||
-                snapshot.data!.docs.isEmpty) {
-              return const SizedBox.shrink();
-            }
-            final documents = snapshot.data!.docs;
-            final paras = <Widget>[];
-            for (final document in documents) {
-              final content = document['para'];
-              paras.add(
-                SizedBox(
-                  width: 499.52,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: Text(
-                      content,
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                          fontSize: 16,
-                          height: 1.75,
-                          color: lightBlue,
-                          fontFamily: 'SFProRegular',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1),
-                    ),
-                  ),
-                ),
-              );
-            }
-
-            return Column(
-              children: paras,
-            );
-          },
+        Column(
+          children: paras,
         ),
         SizedBox(
           height: size.height * 0.1,
@@ -379,53 +367,27 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
   }
 
   Widget experience(Size size, double width) {
-    final Stream<QuerySnapshot> experienceStream =
-        FirebaseFirestore.instance.collection('experience').snapshots();
+    final data = <Widget>[];
+    for (final i in widget.experienceData.reversed) {
+      data.add(
+        DesktopExperienceCard(
+          company: i['company'],
+          title: i['title'],
+          description: i['description'],
+          tags: i['tags'],
+          from: i['from'],
+          to: i['to'],
+          url: i['url'],
+          width: width,
+        ),
+      );
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FutureBuilder<QuerySnapshot>(
-          future: experienceStream.first,
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError ||
-                !snapshot.hasData ||
-                snapshot.data!.docs.isEmpty) {
-              return const SizedBox.shrink();
-            }
-
-            final documents = snapshot.data!.docs;
-            final customCards = <Widget>[];
-            for (final document in documents) {
-              final company = document['company'];
-              final title = document['title'];
-              final description = document['description'];
-              final tags = List<String>.from(document['tags']);
-              final from = document['from'];
-              final to = document['to'];
-              final url = document['url'];
-
-              customCards.add(
-                DesktopExperienceCard(
-                  company: company,
-                  title: title,
-                  description: description,
-                  tags: tags,
-                  from: from,
-                  to: to,
-                  url: url,
-                  width: width,
-                ),
-              );
-            }
-
-            return Column(
-              children: customCards,
-            );
-          },
-        ),
+        Column(children: data),
         MouseRegion(
           cursor: SystemMouseCursors.click,
           opaque: false,
@@ -497,49 +459,27 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
   }
 
   Widget projects(Size size, double width) {
-    final Stream<QuerySnapshot> projectStream =
-        FirebaseFirestore.instance.collection('projects').snapshots();
+    final data = <Widget>[];
+    for (final i in widget.projectData.reversed) {
+      data.add(
+        DesktopProjectCard(
+          company: i['made at'],
+          title: i['project'],
+          description: i['description'],
+          tags: i['tags'],
+          year: i['year'],
+          url: i['url'],
+          width: width,
+        ),
+      );
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FutureBuilder<QuerySnapshot>(
-          future: projectStream.first,
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError ||
-                !snapshot.hasData ||
-                snapshot.data!.docs.isEmpty) {
-              return const SizedBox.shrink();
-            }
-
-            final documents = snapshot.data!.docs;
-            final customCards = <Widget>[];
-            for (final document in documents.reversed) {
-              final company = document['made at'];
-              final title = document['project'];
-              final description = document['description'];
-              final tags = List<String>.from(document['tags']);
-              final year = document['year'];
-              final url = document['url'];
-
-              customCards.add(
-                DesktopProjectCard(
-                  company: company,
-                  title: title,
-                  description: description,
-                  tags: tags,
-                  year: year,
-                  url: url,
-                  width: width,
-                ),
-              );
-            }
-            return Column(
-              children: customCards,
-            );
-          },
+        Column(
+          children: data,
         ),
         MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -612,55 +552,32 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
   }
 
   Widget contact(Size size, double width) {
-    final Stream<QuerySnapshot> aboutStream =
-        FirebaseFirestore.instance.collection('contact').snapshots();
+    String para = "";
     String mail = "";
+    for (final i in widget.contactData) {
+      para = i['para'];
+      mail = i['mail'];
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FutureBuilder<QuerySnapshot>(
-          future: aboutStream.first,
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError ||
-                !snapshot.hasData ||
-                snapshot.data!.docs.isEmpty) {
-              return const SizedBox.shrink();
-            }
-            final documents = snapshot.data!.docs;
-            final para = <Widget>[];
-            for (final document in documents) {
-              final content = document['para'];
-              mail = document['mail'];
-              para.add(
-                SizedBox(
-                  width: 499.52,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 6.0),
-                    child: Text(
-                      content,
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                          fontSize: 16,
-                          height: 1.75,
-                          color: lightBlue,
-                          fontFamily: 'SFProRegular',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1),
-                    ),
-                  ),
-                ),
-              );
-            }
-
-            return Padding(
-              padding: const EdgeInsets.only(left: 33.6),
-              child: Column(
-                children: para,
-              ),
-            );
-          },
+        SizedBox(
+          width: 499.52,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 33.6, top: 6.0),
+            child: Text(
+              para,
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                  fontSize: 16,
+                  height: 1.75,
+                  color: lightBlue,
+                  fontFamily: 'SFProRegular',
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 1),
+            ),
+          ),
         ),
         MouseRegion(
           cursor: SystemMouseCursors.click,

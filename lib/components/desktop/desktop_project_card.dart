@@ -8,7 +8,7 @@ class DesktopProjectCard extends StatefulWidget {
   final String company;
   final String title;
   final String description;
-  final List<String> tags;
+  final List<dynamic> tags;
   final String year;
   final String url;
   final double width;
