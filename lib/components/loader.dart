@@ -48,7 +48,8 @@ class _BreatheAnimationState extends State<BreatheAnimation>
 
 class _BreathePainter extends CustomPainter {
   _BreathePainter(
-    this.animation, this.count, {
+    this.animation,
+    this.count, {
     Color color = const Color(0xff005859),
   })  : circlePaint = Paint()
           ..color = color
