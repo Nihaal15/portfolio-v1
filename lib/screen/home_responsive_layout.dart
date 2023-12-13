@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 
+import '../components/loader.dart';
 import '../utils/constants.dart';
 import '../utils/dimension.dart';
 import '../utils/glow_circle.dart';
@@ -120,8 +121,6 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return (loading == 101)
         ? LayoutBuilder(builder: (context, constraints) {
             if (constraints.maxWidth <= maxMobileWidth) {
@@ -169,22 +168,11 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
                 painter: GlowingCirclePainter(
                   center: Offset(xPosition, yPosition),
                 ),
-                child: Column(
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Expanded(
-                      child: riveArtBoard == null
-                          ? const SizedBox.shrink()
-                          : Rive(
-                              artboard: riveArtBoard!,
-                              alignment: Alignment.center,
-                              fit: BoxFit.contain,
-                              clipRect: Rect.fromCenter(
-                                  center: Offset(
-                                      size.width * 0.5, size.height * 0.5),
-                                  width: size.width * 0.09,
-                                  height: size.height * 0.35),
-                            ),
-                    ),
+                    Expanded(child: BreatheAnimation()),
                   ],
                 ),
               ),

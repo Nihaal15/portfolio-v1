@@ -11,7 +11,6 @@ class NoTransitionsBuilder extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget? child,
   ) {
-    // only return the child without warping it with animations
     return child!;
   }
 }
