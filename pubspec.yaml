@@ -76,7 +76,6 @@ flutter:
     - assets/images/github.svg
     - assets/images/linkedin.svg
     - assets/images/404.svg
-    - assets/images/coffee_loader.riv
 
   # To add assets to your application, add an assets section, like this:
   # assets:
