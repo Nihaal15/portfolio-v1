@@ -32,7 +32,7 @@ class _BreatheAnimationState extends State<BreatheAnimation>
       child: Center(
         child: CustomPaint(
           painter: _BreathePainter(
-              CurvedAnimation(parent: _controller, curve: Curves.ease)),
+              CurvedAnimation(parent: _controller, curve: Curves.ease), 6),
           size: Size.infinite,
         ),
       ),
@@ -48,8 +48,7 @@ class _BreatheAnimationState extends State<BreatheAnimation>
 
 class _BreathePainter extends CustomPainter {
   _BreathePainter(
-    this.animation, {
-    this.count = 6,
+    this.animation, this.count, {
     Color color = const Color(0xff005859),
   })  : circlePaint = Paint()
           ..color = color
