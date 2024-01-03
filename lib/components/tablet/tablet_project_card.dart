@@ -12,6 +12,7 @@ class TabletProjectCard extends StatefulWidget {
   final List<dynamic> tags;
   final String year;
   final String url;
+  final String github;
   final double width;
 
   const TabletProjectCard(
@@ -22,6 +23,7 @@ class TabletProjectCard extends StatefulWidget {
       required this.tags,
       required this.year,
       required this.url,
+      required this.github,
       required this.width});
 
   @override

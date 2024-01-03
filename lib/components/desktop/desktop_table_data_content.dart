@@ -43,6 +43,7 @@ class _DesktopTableDataState extends State<DesktopTableData> {
             final tags = List<String>.from(document['tags']);
             final year = document['year'];
             final url = document['url'];
+            final github = document['github'];
 
             return Column(
               children: [
@@ -127,6 +128,7 @@ class _DesktopTableDataState extends State<DesktopTableData> {
                       Link(
                         tableHeaderWidth: tableHeaderWidth,
                         url: url,
+                        github: github,
                         multiplierSize: widget.multiplierSize,
                         index: 4,
                       ),

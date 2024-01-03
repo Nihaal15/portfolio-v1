@@ -374,6 +374,7 @@ class _PortfolioTabletState extends State<PortfolioTablet>
                               tags: i['tags'],
                               year: i['year'],
                               url: i['url'],
+                              github: i['github'],
                               width: width,
                             ),
                           );

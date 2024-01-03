@@ -7,6 +7,7 @@ import '../utils/constants.dart';
 class Link extends StatefulWidget {
   final List tableHeaderWidth;
   final String url;
+  final String github;
   final double multiplierSize;
   final int index;
 
@@ -14,6 +15,7 @@ class Link extends StatefulWidget {
       {super.key,
       required this.tableHeaderWidth,
       required this.url,
+      required this.github,
       required this.multiplierSize,
       required this.index});
 
@@ -22,8 +24,10 @@ class Link extends StatefulWidget {
 }
 
 class _LinkState extends State<Link> {
-  bool isHover = false;
+  bool isHoverGithub = false;
+  bool isHoverLink = false;
   late String url;
+  late String github;
 
   @override
   Widget build(BuildContext context) {
@@ -36,20 +40,43 @@ class _LinkState extends State<Link> {
         url = "";
       });
     }
+    if (widget.github != "") {
+      setState(() {
+        github = widget.github.split("/")[2];
+      });
+    } else {
+      setState(() {
+        github = "";
+      });
+    }
     return SizedBox(
       width:
           widget.tableHeaderWidth[widget.index] * widget.multiplierSize * 0.9,
-      child: MouseRegion(
+      child: Row(
+        children: [
+          githubLink(),
+          const SizedBox(
+            width: 10,
+          ),
+          linkWidget(),
+        ],
+      ),
+    );
+  }
+
+  Widget linkWidget() {
+    if (url != "") {
+      return MouseRegion(
         cursor: SystemMouseCursors.click,
         opaque: false,
         onEnter: (event) {
           setState(() {
-            isHover = true;
+            isHoverLink = true;
           });
         },
         onExit: (event) {
           setState(() {
-            isHover = false;
+            isHoverLink = false;
           });
         },
         child: GestureDetector(
@@ -60,84 +87,99 @@ class _LinkState extends State<Link> {
           },
           onLongPressDown: (onLong) {
             setState(() {
-              isHover = true;
+              isHoverLink = true;
             });
           },
           onLongPressUp: () {
             setState(() {
-              isHover = false;
+              isHoverLink = false;
             });
           },
-          child: linkWidget(),
-        ),
-      ),
-    );
-  }
-
-  Widget linkWidget() {
-    if (url == "github.com") {
-      return Text.rich(
-        TextSpan(
-          children: [
+          child: Text.rich(
             TextSpan(
-              text: "GitHub",
-              style: TextStyle(
-                  color: isHover ? neonBlue : white.withOpacity(0.9),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'SFProRegular',
-                  letterSpacing: 1.2),
-            ),
-            (url != "")
-                ? WidgetSpan(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 7.84),
-                      child: SvgPicture.asset(
-                        'assets/images/github.svg',
-                        colorFilter: ColorFilter.mode(
-                          isHover ? neonBlue : white.withOpacity(0.9),
-                          BlendMode.srcIn,
+              children: [
+                (url != "")
+                    ? WidgetSpan(
+                        child: AnimatedPadding(
+                          padding: const EdgeInsets.only(left: 7.84),
+                          duration: const Duration(milliseconds: 300),
+                          child: SvgPicture.asset(
+                            'assets/images/link-solid.svg',
+                            colorFilter: ColorFilter.mode(
+                              isHoverLink ? neonBlue : white,
+                              BlendMode.srcIn,
+                            ),
+                            height: 15,
+                          ),
                         ),
-                        height: 16,
-                      ),
-                    ),
-                  )
-                : WidgetSpan(child: Container()),
-          ],
+                      )
+                    : WidgetSpan(child: Container()),
+              ],
+            ),
+          ),
         ),
       );
     } else {
-      return Text.rich(
-        TextSpan(
-          children: [
+      return Container();
+    }
+  }
+
+  Widget githubLink() {
+    if (github != "") {
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        opaque: false,
+        onEnter: (event) {
+          setState(() {
+            isHoverGithub = true;
+          });
+        },
+        onExit: (event) {
+          setState(() {
+            isHoverGithub = false;
+          });
+        },
+        child: GestureDetector(
+          onTap: () {
+            if (widget.github != "") {
+              html.window.open(widget.github, "_blank");
+            }
+          },
+          onLongPressDown: (onLong) {
+            setState(() {
+              isHoverGithub = true;
+            });
+          },
+          onLongPressUp: () {
+            setState(() {
+              isHoverGithub = false;
+            });
+          },
+          child: Text.rich(
             TextSpan(
-              text: (url == "") ? url : url.split("/")[2],
-              style: TextStyle(
-                  color: isHover ? neonBlue : white.withOpacity(0.9),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'SFProRegular',
-                  letterSpacing: 1.2),
-            ),
-            (url != "")
-                ? WidgetSpan(
-                    child: AnimatedPadding(
-                      padding: EdgeInsets.only(left: isHover ? 12.32 : 7.84),
-                      duration: const Duration(milliseconds: 300),
-                      child: SvgPicture.asset(
-                        'assets/images/angle-right-solid.svg',
-                        colorFilter: ColorFilter.mode(
-                          isHover ? neonBlue : white,
-                          BlendMode.srcIn,
+              children: [
+                (github != "")
+                    ? WidgetSpan(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 7.84),
+                          child: SvgPicture.asset(
+                            'assets/images/github.svg',
+                            colorFilter: ColorFilter.mode(
+                              isHoverGithub ? neonBlue : white.withOpacity(0.9),
+                              BlendMode.srcIn,
+                            ),
+                            height: 16,
+                          ),
                         ),
-                        height: 15,
-                      ),
-                    ),
-                  )
-                : WidgetSpan(child: Container()),
-          ],
+                      )
+                    : WidgetSpan(child: Container()),
+              ],
+            ),
+          ),
         ),
       );
+    } else {
+      return Container();
     }
   }
 }

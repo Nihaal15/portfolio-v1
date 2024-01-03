@@ -40,6 +40,7 @@ class _TabletTableDataState extends State<TabletTableData> {
             final title = document['project'];
             final year = document['year'];
             final url = document['url'];
+            final github = document['github'];
 
             return Column(
               children: [
@@ -77,6 +78,7 @@ class _TabletTableDataState extends State<TabletTableData> {
                       Link(
                         tableHeaderWidth: tableHeaderWidth,
                         url: url,
+                        github: github,
                         multiplierSize: 0.75,
                         index: 2,
                       ),

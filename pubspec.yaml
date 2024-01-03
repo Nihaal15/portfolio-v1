@@ -72,6 +72,7 @@ flutter:
     - assets/images/angle-right-solid.svg
     - assets/images/angle-left-solid.svg
     - assets/images/arrow-right-solid.svg
+    - assets/images/link-solid.svg
     - assets/images/github.svg
     - assets/images/linkedin.svg
     - assets/images/404.svg
