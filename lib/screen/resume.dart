@@ -25,7 +25,7 @@ class Resume extends StatelessWidget {
               height: double.infinity,
               width: double.infinity,
               child: HtmlWidget(
-                '<iframe src="$pdfUrl"></iframe>',
+                '<iframe src="$pdfUrl" style="width: 100vw; height: 100vh"></iframe>',
               ),
             );
           } else {
