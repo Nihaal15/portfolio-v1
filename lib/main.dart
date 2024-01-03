@@ -27,13 +27,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
           pageTransitionsTheme: PageTransitionsTheme(
-        builders: kIsWeb
-            ? {
-                for (final platform in TargetPlatform.values)
-                  platform: const NoTransitionsBuilder(),
-              }
-            : const {},
-      )),
+            builders: kIsWeb
+                ? {
+              for (final platform in TargetPlatform.values)
+                platform: const NoTransitionsBuilder(),
+            }
+                : const {},
+          )),
       debugShowCheckedModeBanner: false,
       debugShowMaterialGrid: false,
       onUnknownRoute: (settings) {
