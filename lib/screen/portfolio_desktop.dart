@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -593,7 +592,7 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
             });
           },
           child: Padding(
-            padding: EdgeInsets.only(left: 33.6, top: size.height * 0.01),
+            padding: EdgeInsets.only(left: 33.6, top: size.height * 0.01, bottom: size.height * 0.075),
             child: GestureDetector(
               onTap: () {
                 html.window.open("mailto:$mail", "_blank");
@@ -640,134 +639,6 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
                 ),
               ),
             ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: size.height * 0.075),
-          child: RichText(
-            text: TextSpan(children: [
-              TextSpan(
-                text: 'Designed in ',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white.withOpacity(0.5),
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: 'Figma',
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    html.window.open("https://www.figma.com", "_blank");
-                  },
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white,
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: ' and coded in ',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white.withOpacity(0.5),
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: 'Android Studio',
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    html.window
-                        .open("https://developer.android.com/studio", "_blank");
-                  },
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white,
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: ' by yours truly. Built with ',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white.withOpacity(0.5),
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: 'Flutter',
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    html.window.open("https://flutter.dev/", "_blank");
-                  },
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white,
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: ', deployed with ',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white.withOpacity(0.5),
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: 'Firebase',
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    html.window.open("https://firebase.google.com/", "_blank");
-                  },
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white,
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: '. All text is set in the ',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white.withOpacity(0.5),
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: 'SF Pro',
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    html.window
-                        .open("https://developer.apple.com/fonts/", "_blank");
-                  },
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white,
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 2),
-              ),
-              TextSpan(
-                text: ' typeface.',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: white.withOpacity(0.5),
-                    fontFamily: 'SFProRegular',
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 2),
-              ),
-            ]),
           ),
         ),
       ],

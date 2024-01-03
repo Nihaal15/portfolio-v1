@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:rive/rive.dart';
 
 import '../components/loader.dart';
 import '../utils/constants.dart';
@@ -26,8 +24,6 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
   double yPosition = 0.0;
 
   double loading = 0;
-  Artboard? riveArtBoard;
-  SMINumber? numLoader;
   Timer? valueUpdateTimer;
   double i = 0;
 
@@ -46,21 +42,6 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
         setState(() {});
       });
     WidgetsBinding.instance.addObserver(this);
-    rootBundle.load('assets/images/coffee_loader.riv').then((data) async {
-      try {
-        final file = RiveFile.import(data);
-        final artBoard = file.mainArtboard;
-        var controller =
-            StateMachineController.fromArtboard(artBoard, 'State Machine 1');
-        if (controller != null) {
-          artBoard.addController(controller);
-          numLoader = controller.findSMI('numLoader');
-        }
-        setState(() {
-          riveArtBoard = artBoard;
-        });
-      } catch (_) {}
-    });
     getData();
   }
 
@@ -91,22 +72,18 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
       if (loading == 25 && i != 25) {
         setState(() {
           i++;
-          numLoader!.value = i;
         });
       } else if (loading == 50 && i != 50) {
         setState(() {
           i++;
-          numLoader!.value = i;
         });
       } else if (loading == 75 && i != 75) {
         setState(() {
           i++;
-          numLoader!.value = i;
         });
       } else if (loading == 100 && i != 100) {
         setState(() {
           i++;
-          numLoader!.value = i;
         });
       } else {
         timer.cancel();
