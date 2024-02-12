@@ -1,40 +1,45 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-class Resume extends StatelessWidget {
+import '../components/pdf_viewer.dart';
+import '../utils/constants.dart';
+
+class Resume extends StatefulWidget {
   const Resume({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final storageRef = FirebaseStorage.instance.ref();
-    String pdfUrl = '/documents/Resume.pdf';
+  State<Resume> createState() => _ResumeState();
+}
 
+class _ResumeState extends State<Resume> {
+  late String pdfUri;
+  bool _isLoading = true;
+
+  Future<void> loadPDF() async {
+    String pdfLocation = '/documents/Resume.pdf';
+    final Reference ref = FirebaseStorage.instance.ref().child(pdfLocation);
+    String pdfUrl = await ref.getDownloadURL();
+    setState(() {
+      pdfUri = pdfUrl;
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadPDF();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<String>(
-        future: storageRef.child(pdfUrl).getDownloadURL(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text('Error loading PDF: ${snapshot.error}'),
-              );
-            }
-            final pdfUrl = snapshot.data;
-            return SizedBox(
-              height: double.infinity,
-              width: double.infinity,
-              child: HtmlWidget(
-                '<iframe src="$pdfUrl" style="width: 100vw; height: 100vh"></iframe>',
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    );
+        backgroundColor: bgColor,
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator(color: neonBlue))
+            : SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: PDFViewer(uri: pdfUri)));
   }
 }
