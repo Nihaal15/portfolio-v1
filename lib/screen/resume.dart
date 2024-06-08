@@ -66,7 +66,7 @@ class _ResumeState extends State<Resume> {
 
   Widget resumeViewer(Size size, double fontSize) {
     return Scaffold(
-        backgroundColor: _isLoading ? bgColor : white.withOpacity(0.5),
+        backgroundColor: _isLoading ? bgColor : const Color(0xFFFFFFFF),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             saveFile(pdfData);
@@ -74,7 +74,9 @@ class _ResumeState extends State<Resume> {
           elevation: _isLoading ? 0 : 20,
           foregroundColor: white,
           backgroundColor: bgColor,
-          child: _isLoading ? const SizedBox.shrink() : const Icon(Icons.file_download_outlined),
+          child: _isLoading
+              ? const SizedBox.shrink()
+              : const Icon(Icons.file_download_outlined),
         ),
         body: _isLoading
             ? Center(child: CircularProgressIndicator(color: neonBlue))

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:pdfx/pdfx.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PDFViewer extends StatefulWidget {
   final Uint8List pdfData;
@@ -13,19 +13,13 @@ class PDFViewer extends StatefulWidget {
 }
 
 class _PDFViewerState extends State<PDFViewer> {
-  late PdfControllerPinch pdfPinchController =
-      PdfControllerPinch(document: PdfDocument.openData(widget.pdfData));
-
   @override
   Widget build(BuildContext context) {
     if (widget.pdfData.isEmpty) {
       Navigator.of(context).pushNamed("/");
       return const SizedBox.shrink();
     } else {
-      return PdfViewPinch(
-        controller: pdfPinchController,
-        padding: 0,
-      );
+      return SfPdfViewer.memory(widget.pdfData);
     }
   }
 }
