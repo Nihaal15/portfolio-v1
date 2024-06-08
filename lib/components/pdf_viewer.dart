@@ -1,24 +1,31 @@
-import 'dart:html' as html;
-import 'dart:ui_web' as ui;
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:pdfx/pdfx.dart';
 
-class PDFViewer extends StatelessWidget {
-  final String uri;
+class PDFViewer extends StatefulWidget {
+  final Uint8List pdfData;
 
-  PDFViewer({super.key, required this.uri}) {
-    ui.platformViewRegistry.registerViewFactory('object', (int viewId) {
-      var object = html.ObjectElement()
-        ..style.border = 'none'
-        ..style.height = '100vh'
-        ..style.width = '100vw';
-      object.data = uri;
-      return object;
-    });
-  }
+  const PDFViewer({super.key, required this.pdfData});
+
+  @override
+  State<PDFViewer> createState() => _PDFViewerState();
+}
+
+class _PDFViewerState extends State<PDFViewer> {
+  late PdfControllerPinch pdfPinchController =
+      PdfControllerPinch(document: PdfDocument.openData(widget.pdfData));
 
   @override
   Widget build(BuildContext context) {
-    return const HtmlElementView(viewType: 'object');
+    if (widget.pdfData.isEmpty) {
+      Navigator.of(context).pushNamed("/");
+      return const SizedBox.shrink();
+    } else {
+      return PdfViewPinch(
+        controller: pdfPinchController,
+        padding: 0,
+      );
+    }
   }
 }

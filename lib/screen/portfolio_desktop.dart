@@ -17,6 +17,7 @@ class PortfolioDesktop extends StatefulWidget {
   final List<Map<String, dynamic>> experienceData;
   final List<Map<String, dynamic>> projectData;
   final List<Map<String, dynamic>> contactData;
+  final List<Map<String, dynamic>> homeData;
 
   const PortfolioDesktop(
       {super.key,
@@ -24,7 +25,8 @@ class PortfolioDesktop extends StatefulWidget {
       required this.aboutData,
       required this.experienceData,
       required this.projectData,
-      required this.contactData});
+      required this.contactData,
+      required this.homeData});
 
   @override
   State<PortfolioDesktop> createState() => _PortfolioDesktopState();
@@ -130,188 +132,174 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
     });
 
     return Scaffold(
-      backgroundColor: bgColor,
-      body: Listener(
-        onPointerMove: _updateLocation,
-        onPointerHover: _updateLocation,
-        child: CustomPaint(
-            painter: GlowingCirclePainter(
-              center: Offset(xPosition, yPosition),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 510 * width,
-                  height: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: size.height * 0.06),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "NIHAAL SHIRKAR",
-                          style: TextStyle(
-                              fontSize: 40,
-                              color: white,
-                              fontFamily: 'SFProBold',
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 3),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            "BACHELOR OF ENGINEERING (COMPUTER)",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: white,
-                                fontFamily: 'SFProMedium',
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 2),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: SizedBox(
-                            width: 537.6,
-                            child: Text(
-                              "I enjoy creating Android apps that focus on the user, aiming to provide smooth and enjoyable digital experiences.",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: lightBlue,
-                                  fontFamily: 'SFProMedium',
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: 1),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: size.height * 0.05),
-                          child: SizedBox(
-                            height: size.height * 0.25,
-                            child: ListView.builder(
-                              itemCount: buttonTitles.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
+        backgroundColor: bgColor,
+        body: Listener(
+            onPointerMove: _updateLocation,
+            onPointerHover: _updateLocation,
+            child: CustomPaint(
+                painter: GlowingCirclePainter(
+                  center: Offset(xPosition, yPosition),
+                ),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  SizedBox(
+                      width: 510 * width,
+                      height: double.infinity,
+                      child: Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.06),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.homeData[0]['name'],
+                                  style: TextStyle(
+                                      fontSize: 40,
+                                      color: white,
+                                      fontFamily: 'SFProBold',
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: 3),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(widget.homeData[0]['position'],
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: white,
+                                            fontFamily: 'SFProMedium',
+                                            fontWeight: FontWeight.w700,
+                                            letterSpacing: 2))),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: SizedBox(
+                                        width: 537.6,
+                                        child: Text(widget.homeData[0]['quote'],
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: lightBlue,
+                                                fontFamily: 'SFProMedium',
+                                                fontWeight: FontWeight.w400,
+                                                letterSpacing: 1)))),
+                                Padding(
                                     padding: EdgeInsets.only(
-                                        top: size.height * 0.02),
-                                    child: HoverButton(
-                                      title: buttonTitles[index],
-                                      onTap: () {
-                                        _scrollToSection(index);
-                                      },
-                                      isActive: _isActive(index),
-                                    ));
-                              },
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 30),
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      html.window.open(
-                                          'https://github.com/Nihaal15',
-                                          "_blank");
-                                    },
-                                    child: MouseRegion(
-                                      onEnter: (PointerEnterEvent data) {
-                                        setState(() {
-                                          gitHover = true;
-                                        });
-                                      },
-                                      onExit: (PointerExitEvent data) {
-                                        setState(() {
-                                          gitHover = false;
-                                        });
-                                      },
-                                      opaque: false,
-                                      child: AnimatedOpacity(
-                                        duration:
-                                            const Duration(milliseconds: 200),
-                                        opacity: gitHover ? 1 : 0.5,
-                                        child: SvgPicture.asset(
-                                          'assets/images/github.svg',
-                                          colorFilter: ColorFilter.mode(
-                                            white,
-                                            BlendMode.srcIn,
-                                          ),
-                                          height: 28,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  InkWell(
-                                    onTap: () {
-                                      html.window.open(
-                                          'https://www.linkedin.com/in/nihaalshirkar15/',
-                                          "_blank");
-                                    },
-                                    child: MouseRegion(
-                                      onEnter: (PointerEnterEvent data) {
-                                        setState(() {
-                                          linkedinHover = true;
-                                        });
-                                      },
-                                      onExit: (PointerExitEvent data) {
-                                        setState(() {
-                                          linkedinHover = false;
-                                        });
-                                      },
-                                      opaque: false,
-                                      child: AnimatedOpacity(
-                                        duration:
-                                            const Duration(milliseconds: 200),
-                                        opacity: linkedinHover ? 1 : 0.5,
-                                        child: SvgPicture.asset(
-                                          'assets/images/linkedin.svg',
-                                          colorFilter: ColorFilter.mode(
-                                            white,
-                                            BlendMode.srcIn,
-                                          ),
-                                          height: 28,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: size.width * width * 0.03),
-                SizedBox(
-                  height: double.infinity,
-                  width: 590 * width,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: size.height * 0.06),
-                    child: ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(context)
-                          .copyWith(scrollbars: false),
-                      child: ScrollablePositionedList.builder(
-                        itemScrollController: _scrollController,
-                        itemPositionsListener: itemPositionsListener,
-                        itemCount: buttonTitles.length,
-                        itemBuilder: (context, index) => item(index),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )),
-      ),
-    );
+                                        top: size.height * 0.05),
+                                    child: SizedBox(
+                                        height: size.height * 0.25,
+                                        child: ListView.builder(
+                                            itemCount: buttonTitles.length,
+                                            itemBuilder: (context, index) {
+                                              return Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: size.height * 0.02),
+                                                  child: HoverButton(
+                                                      title:
+                                                          buttonTitles[index],
+                                                      onTap: () {
+                                                        _scrollToSection(index);
+                                                      },
+                                                      isActive:
+                                                          _isActive(index)));
+                                            }))),
+                                Expanded(
+                                    child: Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 30),
+                                            child: Row(children: [
+                                              InkWell(
+                                                  onTap: () {
+                                                    html.window.open(
+                                                        'https://github.com/Nihaal15',
+                                                        "_blank");
+                                                  },
+                                                  child: MouseRegion(
+                                                      onEnter:
+                                                          (PointerEnterEvent
+                                                              data) {
+                                                        setState(() {
+                                                          gitHover = true;
+                                                        });
+                                                      },
+                                                      onExit: (PointerExitEvent
+                                                          data) {
+                                                        setState(() {
+                                                          gitHover = false;
+                                                        });
+                                                      },
+                                                      opaque: false,
+                                                      child: AnimatedOpacity(
+                                                          duration:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      200),
+                                                          opacity: gitHover
+                                                              ? 1
+                                                              : 0.5,
+                                                          child: SvgPicture.asset(
+                                                              'assets/images/github.svg',
+                                                              colorFilter:
+                                                                  ColorFilter.mode(
+                                                                      white,
+                                                                      BlendMode
+                                                                          .srcIn),
+                                                              height: 28)))),
+                                              const SizedBox(width: 20),
+                                              InkWell(
+                                                  onTap: () {
+                                                    html.window.open(
+                                                        'https://www.linkedin.com/in/nihaalshirkar15/',
+                                                        "_blank");
+                                                  },
+                                                  child: MouseRegion(
+                                                      onEnter:
+                                                          (PointerEnterEvent
+                                                              data) {
+                                                        setState(() {
+                                                          linkedinHover = true;
+                                                        });
+                                                      },
+                                                      onExit: (PointerExitEvent
+                                                          data) {
+                                                        setState(() {
+                                                          linkedinHover = false;
+                                                        });
+                                                      },
+                                                      opaque: false,
+                                                      child: AnimatedOpacity(
+                                                          duration:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      200),
+                                                          opacity: linkedinHover
+                                                              ? 1
+                                                              : 0.5,
+                                                          child: SvgPicture.asset(
+                                                              'assets/images/linkedin.svg',
+                                                              colorFilter:
+                                                                  ColorFilter.mode(
+                                                                      white,
+                                                                      BlendMode
+                                                                          .srcIn),
+                                                              height: 28))))
+                                            ]))))
+                              ]))),
+                  SizedBox(width: size.width * width * 0.03),
+                  SizedBox(
+                      height: double.infinity,
+                      width: 590 * width,
+                      child: Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.06),
+                          child: ScrollConfiguration(
+                              behavior: ScrollConfiguration.of(context)
+                                  .copyWith(scrollbars: false),
+                              child: ScrollablePositionedList.builder(
+                                  itemScrollController: _scrollController,
+                                  itemPositionsListener: itemPositionsListener,
+                                  itemCount: buttonTitles.length,
+                                  itemBuilder: (context, index) =>
+                                      item(index)))))
+                ]))));
   }
 
   void _scrollToSection(int index) {
@@ -332,25 +320,19 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
   Widget about(Size size) {
     final paras = <Widget>[];
     for (final i in widget.aboutData) {
-      paras.add(
-        SizedBox(
+      paras.add(SizedBox(
           width: 499.52,
           child: Padding(
-            padding: const EdgeInsets.only(top: 12.0),
-            child: Text(
-              i,
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                  fontSize: 16,
-                  height: 1.75,
-                  color: lightBlue,
-                  fontFamily: 'SFProRegular',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 1),
-            ),
-          ),
-        ),
-      );
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Text(i,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      fontSize: 16,
+                      height: 1.75,
+                      color: lightBlue,
+                      fontFamily: 'SFProRegular',
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 1)))));
     }
 
     return Column(
@@ -368,8 +350,7 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
   Widget experience(Size size, double width) {
     final data = <Widget>[];
     for (final i in widget.experienceData.reversed) {
-      data.add(
-        DesktopExperienceCard(
+      data.add(DesktopExperienceCard(
           company: i['company'],
           title: i['title'],
           description: i['description'],
@@ -377,89 +358,76 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
           from: i['from'],
           to: i['to'],
           url: i['url'],
-          width: width,
-        ),
-      );
+          width: width));
     }
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(children: data),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          opaque: false,
-          onEnter: (event) {
-            setState(() {
-              isHover = true;
-            });
-          },
-          onExit: (event) {
-            setState(() {
-              isHover = false;
-            });
-          },
-          child: Padding(
-            padding: EdgeInsets.only(left: 33.6, top: size.height * 0.01),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed("/resume");
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(children: data),
+          MouseRegion(
+              cursor: SystemMouseCursors.click,
+              opaque: false,
+              onEnter: (event) {
+                setState(() {
+                  isHover = true;
+                });
               },
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'View Full Résumé',
-                      style: TextStyle(
-                          fontSize: 16,
-                          height: 1.75,
-                          shadows: [
-                            Shadow(color: white, offset: const Offset(0, -2.5))
-                          ],
-                          decoration: isHover
-                              ? TextDecoration.underline
-                              : TextDecoration.none,
-                          decorationColor:
-                              isHover ? neonBlue : Colors.transparent,
-                          decorationThickness: isHover ? 1.5 : 0.0,
-                          color: Colors.transparent,
-                          fontFamily: 'SFProMedium',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1),
-                    ),
-                    WidgetSpan(
-                      child: AnimatedPadding(
-                        padding: EdgeInsets.only(
-                            left: isHover ? 14.56 : 7.84,
-                            bottom: size.height * 0.001),
-                        duration: const Duration(milliseconds: 200),
-                        child: SvgPicture.asset(
-                          'assets/images/arrow-right-solid.svg',
-                          colorFilter: ColorFilter.mode(
-                            white,
-                            BlendMode.srcIn,
-                          ),
-                          height: 17.92,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: size.height * 0.1,
-        ),
-      ],
-    );
+              onExit: (event) {
+                setState(() {
+                  isHover = false;
+                });
+              },
+              child: Padding(
+                  padding: EdgeInsets.only(left: 33.6, top: size.height * 0.01),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed("/resume");
+                      },
+                      child: Text.rich(TextSpan(children: [
+                        TextSpan(
+                            text: 'View Full Résumé',
+                            style: TextStyle(
+                                fontSize: 16,
+                                height: 1.75,
+                                shadows: [
+                                  Shadow(
+                                      color: white,
+                                      offset: const Offset(0, -2.5))
+                                ],
+                                decoration: isHover
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+                                decorationColor:
+                                    isHover ? neonBlue : Colors.transparent,
+                                decorationThickness: isHover ? 1.5 : 0.0,
+                                color: Colors.transparent,
+                                fontFamily: 'SFProMedium',
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 1)),
+                        WidgetSpan(
+                            child: AnimatedPadding(
+                                padding: EdgeInsets.only(
+                                    left: isHover ? 14.56 : 7.84,
+                                    bottom: size.height * 0.001),
+                                duration: const Duration(milliseconds: 200),
+                                child: SvgPicture.asset(
+                                    'assets/images/arrow-right-solid.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        white, BlendMode.srcIn),
+                                    height: 17.92)))
+                      ]))))),
+          SizedBox(height: size.height * 0.1)
+        ]);
   }
 
   Widget projects(Size size, double width) {
     final data = <Widget>[];
     for (final i in widget.projectData.reversed) {
+      if (data.length >= 3) {
+        break;
+      }
       data.add(
         DesktopProjectCard(
           company: i['made at'],
@@ -475,80 +443,67 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
     }
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          children: data,
-        ),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          opaque: false,
-          onEnter: (event) {
-            setState(() {
-              isHoverProject = true;
-            });
-          },
-          onExit: (event) {
-            setState(() {
-              isHoverProject = false;
-            });
-          },
-          child: Padding(
-            padding: EdgeInsets.only(left: 33.6, top: size.height * 0.01),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushReplacementNamed("/archive");
-              },
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'View Full Project Archive',
-                      style: TextStyle(
-                          fontSize: 16,
-                          height: 1.75,
-                          shadows: [
-                            Shadow(color: white, offset: const Offset(0, -2.5))
-                          ],
-                          decoration: isHoverProject
-                              ? TextDecoration.underline
-                              : TextDecoration.none,
-                          decorationColor:
-                              isHoverProject ? neonBlue : Colors.transparent,
-                          decorationThickness: isHoverProject ? 1.5 : 0.0,
-                          color: Colors.transparent,
-                          fontFamily: 'SFProMedium',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1),
-                    ),
-                    WidgetSpan(
-                      child: AnimatedPadding(
-                        padding: EdgeInsets.only(
-                            left: isHoverProject ? 14.56 : 7.84,
-                            bottom: size.height * 0.001),
-                        duration: const Duration(milliseconds: 200),
-                        child: SvgPicture.asset(
-                          'assets/images/arrow-right-solid.svg',
-                          colorFilter: ColorFilter.mode(
-                            white,
-                            BlendMode.srcIn,
-                          ),
-                          height: 17.92,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            children: data,
           ),
-        ),
-        SizedBox(
-          height: size.height * 0.08,
-        ),
-      ],
-    );
+          MouseRegion(
+              cursor: SystemMouseCursors.click,
+              opaque: false,
+              onEnter: (event) {
+                setState(() {
+                  isHoverProject = true;
+                });
+              },
+              onExit: (event) {
+                setState(() {
+                  isHoverProject = false;
+                });
+              },
+              child: Padding(
+                  padding: EdgeInsets.only(left: 33.6, top: size.height * 0.01),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacementNamed("/archive");
+                      },
+                      child: Text.rich(TextSpan(children: [
+                        TextSpan(
+                            text: 'View Full Project Archive',
+                            style: TextStyle(
+                                fontSize: 16,
+                                height: 1.75,
+                                shadows: [
+                                  Shadow(
+                                      color: white,
+                                      offset: const Offset(0, -2.5))
+                                ],
+                                decoration: isHoverProject
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+                                decorationColor: isHoverProject
+                                    ? neonBlue
+                                    : Colors.transparent,
+                                decorationThickness: isHoverProject ? 1.5 : 0.0,
+                                color: Colors.transparent,
+                                fontFamily: 'SFProMedium',
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 1)),
+                        WidgetSpan(
+                            child: AnimatedPadding(
+                                padding: EdgeInsets.only(
+                                    left: isHoverProject ? 14.56 : 7.84,
+                                    bottom: size.height * 0.001),
+                                duration: const Duration(milliseconds: 200),
+                                child: SvgPicture.asset(
+                                    'assets/images/arrow-right-solid.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        white, BlendMode.srcIn),
+                                    height: 17.92)))
+                      ]))))),
+          SizedBox(height: size.height * 0.08)
+        ]);
   }
 
   Widget contact(Size size, double width) {
@@ -559,90 +514,78 @@ class _PortfolioDesktopState extends State<PortfolioDesktop>
       mail = i['mail'];
     }
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 499.52,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 33.6, top: 6.0),
-            child: Text(
-              para,
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                  fontSize: 16,
-                  height: 1.75,
-                  color: lightBlue,
-                  fontFamily: 'SFProRegular',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 1),
-            ),
-          ),
-        ),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          opaque: false,
-          onEnter: (event) {
-            setState(() {
-              isHoverContact = true;
-            });
-          },
-          onExit: (event) {
-            setState(() {
-              isHoverContact = false;
-            });
-          },
-          child: Padding(
-            padding: EdgeInsets.only(left: 33.6, top: size.height * 0.01, bottom: size.height * 0.075),
-            child: GestureDetector(
-              onTap: () {
-                html.window.open("mailto:$mail", "_blank");
-              },
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Say Hello!',
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+              width: 499.52,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 33.6, top: 6.0),
+                  child: Text(para,
+                      textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 16,
                           height: 1.75,
-                          shadows: [
-                            Shadow(color: white, offset: const Offset(0, -2.5))
-                          ],
-                          decoration: isHoverContact
-                              ? TextDecoration.underline
-                              : TextDecoration.none,
-                          decorationColor:
-                              isHoverContact ? neonBlue : Colors.transparent,
-                          decorationThickness: isHoverContact ? 1.5 : 0.0,
-                          color: Colors.transparent,
-                          fontFamily: 'SFProMedium',
+                          color: lightBlue,
+                          fontFamily: 'SFProRegular',
                           fontWeight: FontWeight.w400,
-                          letterSpacing: 1),
-                    ),
-                    WidgetSpan(
-                      child: AnimatedPadding(
-                        padding: EdgeInsets.only(
-                            left: isHoverContact ? 14.56 : 7.84,
-                            bottom: size.height * 0.001),
-                        duration: const Duration(milliseconds: 200),
-                        child: SvgPicture.asset(
-                          'assets/images/arrow-right-solid.svg',
-                          colorFilter: ColorFilter.mode(
-                            white,
-                            BlendMode.srcIn,
-                          ),
-                          height: 17.92,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+                          letterSpacing: 1)))),
+          MouseRegion(
+              cursor: SystemMouseCursors.click,
+              opaque: false,
+              onEnter: (event) {
+                setState(() {
+                  isHoverContact = true;
+                });
+              },
+              onExit: (event) {
+                setState(() {
+                  isHoverContact = false;
+                });
+              },
+              child: Padding(
+                  padding: EdgeInsets.only(
+                      left: 33.6,
+                      top: size.height * 0.01,
+                      bottom: size.height * 0.075),
+                  child: GestureDetector(
+                      onTap: () {
+                        html.window.open("mailto:$mail", "_blank");
+                      },
+                      child: Text.rich(TextSpan(children: [
+                        TextSpan(
+                            text: 'Say Hello!',
+                            style: TextStyle(
+                                fontSize: 16,
+                                height: 1.75,
+                                shadows: [
+                                  Shadow(
+                                      color: white,
+                                      offset: const Offset(0, -2.5))
+                                ],
+                                decoration: isHoverContact
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+                                decorationColor: isHoverContact
+                                    ? neonBlue
+                                    : Colors.transparent,
+                                decorationThickness: isHoverContact ? 1.5 : 0.0,
+                                color: Colors.transparent,
+                                fontFamily: 'SFProMedium',
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 1)),
+                        WidgetSpan(
+                            child: AnimatedPadding(
+                                padding: EdgeInsets.only(
+                                    left: isHoverContact ? 14.56 : 7.84,
+                                    bottom: size.height * 0.001),
+                                duration: const Duration(milliseconds: 200),
+                                child: SvgPicture.asset(
+                                    'assets/images/arrow-right-solid.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        white, BlendMode.srcIn),
+                                    height: 17.92)))
+                      ])))))
+        ]);
   }
 }

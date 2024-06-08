@@ -31,6 +31,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
   List<Map<String, dynamic>> experienceData = [];
   List<Map<String, dynamic>> projectData = [];
   List<Map<String, dynamic>> contactData = [];
+  List<Map<String, dynamic>> homeData = [];
 
   @override
   void initState() {
@@ -98,7 +99,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
 
   @override
   Widget build(BuildContext context) {
-    return (loading == 101)
+    return (loading >= 101)
         ? LayoutBuilder(builder: (context, constraints) {
             if (constraints.maxWidth <= maxMobileWidth) {
               return PortfolioTablet(
@@ -107,6 +108,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
                 experienceData: experienceData,
                 projectData: projectData,
                 contactData: contactData,
+                homeData: homeData,
               );
             } else if (maxMobileWidth < constraints.maxWidth &&
                 constraints.maxWidth <= maxLaptopWidth) {
@@ -116,6 +118,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
                 experienceData: experienceData,
                 projectData: projectData,
                 contactData: contactData,
+                homeData: homeData,
               );
             } else if (maxLaptopWidth < constraints.maxWidth &&
                 constraints.maxWidth <= maxLargeWidth) {
@@ -125,6 +128,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
                 experienceData: experienceData,
                 projectData: projectData,
                 contactData: contactData,
+                homeData: homeData,
               );
             } else {
               return PortfolioDesktop(
@@ -133,28 +137,23 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
                 experienceData: experienceData,
                 projectData: projectData,
                 contactData: contactData,
+                homeData: homeData,
               );
             }
           })
         : Scaffold(
             backgroundColor: bgColor,
             body: Listener(
-              onPointerMove: _updateLocation,
-              onPointerHover: _updateLocation,
-              child: CustomPaint(
-                painter: GlowingCirclePainter(
-                  center: Offset(xPosition, yPosition),
-                ),
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(child: BreatheAnimation()),
-                  ],
-                ),
-              ),
-            ),
-          );
+                onPointerMove: _updateLocation,
+                onPointerHover: _updateLocation,
+                child: CustomPaint(
+                    painter: GlowingCirclePainter(
+                      center: Offset(xPosition, yPosition),
+                    ),
+                    child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [Expanded(child: BreatheAnimation())]))));
   }
 
   Future<void> getData() async {
@@ -165,6 +164,15 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout>
       final querySnapshot = await db.collection('about').get();
       for (var docSnapshot in querySnapshot.docs) {
         aboutData.add(docSnapshot.data()['para']);
+      }
+      loading += 25;
+      startValueUpdateTimer();
+    } catch (_) {}
+
+    try {
+      final querySnapshot = await db.collection('home').get();
+      for (var docSnapshot in querySnapshot.docs) {
+        homeData.add(docSnapshot.data());
       }
       loading += 25;
       startValueUpdateTimer();
